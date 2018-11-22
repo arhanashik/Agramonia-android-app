@@ -50,7 +50,7 @@ public class TouristActivity extends AppCompatActivity {
     }
 
     private void openBrowser(String url){
-        if (!url.startsWith("http://") || !url.startsWith("https://")) {
+        if (!(url.startsWith("http://") || url.startsWith("https://"))) {
             url = "https://" + url;
         }
         Intent i = new Intent(Intent.ACTION_VIEW);
