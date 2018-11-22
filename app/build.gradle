@@ -16,7 +16,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding{
+    dataBinding {
         enabled = true
     }
     compileOptions {
@@ -41,8 +41,20 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$rootProject.support"
 }
 
-//Testing libs
-dependencies{
+//3rd party
+dependencies {
+    //barcode scanner
+    implementation "me.dm7.barcodescanner:zxing:$rootProject.barcodescanner"
+
+    // circle image
+    implementation "com.mikhaellopez:circularimageview:$rootProject.circularimageview"
+
+    //image loader
+    implementation "com.github.bumptech.glide:glide:$rootProject.glide"
+}
+
+//testing libs
+dependencies {
     testImplementation "junit:junit:$rootProject.junit"
     androidTestImplementation "androidx.test:runner:$rootProject.runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espresso"

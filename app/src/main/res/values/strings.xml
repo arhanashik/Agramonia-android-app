@@ -1,6 +1,25 @@
 <resources>
     <string name="app_name">Agramonia</string>
 
+    <string name="title_scanner_activity">Scanner</string>
+
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="label_scan_qr_code">Scan QR Code</string>
+    <string name="label_tourist_title">
+        Hello!\nPlease scan the QR code of the product to see it\'s farmer!
+    </string>
+
+    <string name="default_web_address">www.google.com</string>
+
+    <string name="invalid_qr_code_exception">Ops! Invalid QR code.</string>
+    <string name="scan_canceled_exception">Ops! Scanning canceled.</string>
+    <string name="no_browser_found_exception">Ops! Please install a browser first!</string>
+    <string name="camera_permission_denied_exception">
+        Camera permission is required to scan bar-code
+    </string>
+    <string name="description_img_logo">Image Logo</string>
+    <string name="label_tourist">I am a Tourist</string>
+    <string name="label_farmer">I am a Farmer</string>
+    <string name="title_tourist_activity">Tourist</string>
 </resources>

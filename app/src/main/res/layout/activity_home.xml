@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:padding="16dp"
+        tools:context=".ui.home.HomeActivity">
+
+        <ImageView
+            android:id="@+id/img_app_logo"
+            android:layout_width="@dimen/app_logo_width"
+            android:layout_height="@dimen/app_logo_height"
+            tools:src="@drawable/img_logo_only_name"
+            android:contentDescription="@string/description_img_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_tourist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="img_tourist, tv_tourist" />
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/img_tourist"
+            android:layout_width="@dimen/avatar_width"
+            android:layout_height="@dimen/avatar_height"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/img_tourist"
+            app:civ_border_color="@color/colorPrimary"
+            app:civ_border_width="2dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="4"
+            app:civ_shadow_color="@color/colorPrimaryDark"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_tourist"
+            app:layout_constraintBottom_toTopOf="@+id/divider" />
+
+        <TextView
+            android:id="@+id/tv_tourist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:text="@string/label_tourist"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            app:layout_constraintStart_toEndOf="@+id/img_tourist"
+            app:layout_constraintTop_toTopOf="@+id/img_tourist"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/img_tourist"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_farmer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="img_farmer, tv_farmer" />
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/img_farmer"
+            android:layout_width="@dimen/avatar_width"
+            android:layout_height="@dimen/avatar_height"
+            android:layout_marginTop="10sp"
+            android:src="@drawable/img_farmer"
+            app:civ_border_color="@color/colorPrimary"
+            app:civ_border_width="2dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="4"
+            app:civ_shadow_color="@color/colorPrimaryDark"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintEnd_toStartOf="@+id/tv_farmer" />
+
+        <TextView
+            android:id="@+id/tv_farmer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:text="@string/label_farmer"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            app:layout_constraintStart_toEndOf="@+id/img_farmer"
+            app:layout_constraintTop_toTopOf="@+id/img_farmer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/img_farmer"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
