@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 import com.blackspider.agramonia.R;
 import com.blackspider.agramonia.databinding.ActivitySplashBinding;
 import com.blackspider.agramonia.ui.home.HomeActivity;
-import com.bumptech.glide.Glide;
+import com.blackspider.util.helper.ImageLoader;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -29,13 +29,8 @@ public class SplashActivity extends AppCompatActivity {
         ActivitySplashBinding mBinding = DataBindingUtil.setContentView(this,
                 R.layout.activity_splash);
 
-        Glide.with(this)
-                .load(R.mipmap.ic_launcher)
-                .into(mBinding.imgAppLogo);
-
-        Glide.with(this)
-                .load(R.drawable.img_logo_only_name)
-                .into(mBinding.imgAppName);
+        ImageLoader.load(this, mBinding.imgAppLogo, R.mipmap.ic_launcher);
+        ImageLoader.load(this, mBinding.imgAppName, R.drawable.img_logo_only_name);
 
         long animStartTime = AnimationUtils.currentAnimationTimeMillis() + 10;
         Animation leftIn = AnimationUtils.loadAnimation(this, R.anim.left_in);
