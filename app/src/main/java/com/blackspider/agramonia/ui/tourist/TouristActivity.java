@@ -14,12 +14,16 @@ import android.widget.Toast;
 import com.blackspider.agramonia.R;
 import com.blackspider.util.lib.barcodescanner.SimpleScannerActivity;
 
+import java.util.Objects;
+
 public class TouristActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tourist);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     public void onClickScanner(View view){

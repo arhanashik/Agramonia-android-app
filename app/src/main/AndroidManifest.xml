@@ -25,7 +25,12 @@
         <activity android:name=".ui.home.HomeActivity"
             android:theme="@style/AppTheme.NoToolbar"/>
         <activity android:name=".ui.tourist.TouristActivity"
-            android:label="@string/title_tourist_activity"/>
+            android:label="@string/title_tourist_activity"
+            android:parentActivityName=".ui.home.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.HomeActivity" />
+        </activity>
         <activity
             android:name="com.blackspider.util.lib.barcodescanner.SimpleScannerActivity"
             android:label="@string/title_scanner_activity" />
