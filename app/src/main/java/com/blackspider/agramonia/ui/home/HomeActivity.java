@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.blackspider.agramonia.R;
 import com.blackspider.agramonia.databinding.ActivityHomeBinding;
+import com.blackspider.agramonia.ui.farmer.login.LoginActivity;
 import com.blackspider.agramonia.ui.tourist.TouristActivity;
 import com.blackspider.util.helper.ImageLoader;
 
@@ -28,9 +29,8 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         for (int id : mBinding.groupFarmer.getReferencedIds()) {
-            findViewById(id).setOnClickListener(view -> {
-                //startActivity(new Intent(this, TouristActivity.class));
-            });
+            findViewById(id).setOnClickListener(view ->
+                    startActivity(new Intent(this, LoginActivity.class)));
         }
     }
 }

@@ -22,10 +22,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.home.HomeActivity"
-            android:theme="@style/AppTheme.NoToolbar"/>
-        <activity android:name=".ui.tourist.TouristActivity"
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:theme="@style/AppTheme.NoToolbar" />
+        <activity
+            android:name=".ui.tourist.TouristActivity"
             android:label="@string/title_tourist_activity"
+            android:parentActivityName=".ui.home.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.HomeActivity" />
+        </activity>
+        <activity android:name=".ui.farmer.login.LoginActivity"
+            android:label="@string/title_login_activity"
             android:parentActivityName=".ui.home.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

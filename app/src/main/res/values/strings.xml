@@ -22,4 +22,10 @@
     <string name="label_tourist">I am a Tourist</string>
     <string name="label_farmer">I am a Farmer</string>
     <string name="title_tourist_activity">Tourist</string>
+    <string name="title_login_activity">Log in</string>
+    <string name="hint_email_address">Your email address</string>
+    <string name="hint_password">Your password</string>
+    <string name="label_login">Log in</string>
+    <string name="email_required_exception">Email required</string>
+    <string name="password_required_exception">Password required</string>
 </resources>
