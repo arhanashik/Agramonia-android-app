@@ -46,6 +46,6 @@ ext{
     espresso = '3.1.0-alpha3'
 
     barcodescanner = '1.9.8'
-    circularimageview = '3.0.2'
+    circularimageview = '3.2.0'
     glide = '4.8.0'
 }
