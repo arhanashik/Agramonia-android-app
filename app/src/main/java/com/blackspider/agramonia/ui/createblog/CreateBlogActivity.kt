@@ -4,13 +4,20 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.blackspider.agramonia.R
 import com.blackspider.agramonia.databinding.ActivityCreateBlogBinding
+import com.blackspider.agramonia.ui.base.callback.ItemClickListener
 import com.blackspider.agramonia.ui.base.component.BaseActivity
 import com.blackspider.util.helper.ImagePicker
 import com.blackspider.util.helper.PermissionUtil
+import com.blackspider.util.helper.ViewUtils
+import io.reactivex.android.schedulers.AndroidSchedulers
+import timber.log.Timber
 
 class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>() {
     private lateinit var mBinding: ActivityCreateBlogBinding
@@ -31,6 +38,39 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
         setTitle(getString(R.string.create_blog))
         mBinding.textViewCreate.setOnClickListener(this)
         mBinding.textViewAddPhoto.setOnClickListener(this)
+
+        ViewUtils.initializeRecyclerView(mBinding.recyclerViewPhotos, PhotoAdapter(),
+                object : ItemClickListener<Uri> {
+                    override fun onItemClick(view: View, item: Uri, position: Int) {
+                        when (view.id) {
+                            R.id.image_view_cross -> {
+                                getAdapter().removeItem(item)
+                            }
+
+                            else -> {
+
+                            }
+                        }
+                    }
+                }, null,
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false),
+                null, DefaultItemAnimator())
+
+        presenter.compositeDisposable.add(
+                getAdapter().dataChanges()
+                        .map { it < 6 }
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            mBinding.textViewAddPhoto.isEnabled = it
+                        }, {
+                            Timber.e(it)
+                        })
+        )
+    }
+
+    fun getAdapter(): PhotoAdapter {
+        return mBinding.recyclerViewPhotos.adapter as PhotoAdapter
     }
 
     override fun onClick(view: View) {
@@ -80,7 +120,8 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
                 if (resultCode == Activity.RESULT_OK) {
                     val pickedImageInfo = ImagePicker.getPickedImageInfo(this, resultCode, data)
 
-
+                    if (pickedImageInfo.imageUri != null)
+                        getAdapter().addItem(pickedImageInfo.imageUri)
                 } else {
                     if (resultCode != Activity.RESULT_CANCELED) {
                         Toast.makeText(this, "Could not pick image", Toast.LENGTH_SHORT).show()

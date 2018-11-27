@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.blackspider.agramonia.R;
+import com.blackspider.agramonia.data.constant.AppConstants;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +33,6 @@ public class ImagePicker {
     // Constants
     public final static int REQUEST_CODE_PICK_IMAGE = 15913;
     private final static int DEFAULT_MIN_WIDTH_QUALITY = 400; // Minimum pixels
-    private final static String TEMP_ORIGINAL_IMAGE = "tempOriginalImage.jpg";
     private final static String PICKER_TITLE = "Pick Image";
 
     private ImagePicker() {
@@ -323,11 +323,15 @@ public class ImagePicker {
     }
 
     private static File getTempFileForImage(Context context) {
-        return getTempFile(context, TEMP_ORIGINAL_IMAGE, false);
+        Long timeStamp = System.currentTimeMillis();
+        String imageName = AppConstants.PREFIX_IMAGE + timeStamp.toString() + AppConstants.POSTFIX_IMAGE;
+        return getTempFile(context, imageName, false);
     }
 
     private static File getEmptyTempFileForImage(Context context) {
-        return getTempFile(context, TEMP_ORIGINAL_IMAGE, true);
+        Long timeStamp = System.currentTimeMillis();
+        String imageName = AppConstants.PREFIX_IMAGE + timeStamp.toString() + AppConstants.POSTFIX_IMAGE;
+        return getTempFile(context, imageName, true);
     }
 
     private static boolean deleteTempFile(Context context) {
@@ -336,7 +340,7 @@ public class ImagePicker {
     }
 
     private static File getTempFile(Context context, String fileName, boolean isEmptyFile) {
-        File file = new File(context.getExternalCacheDir(), fileName);
+        File file = new File(AppConstants.DIRECTORY_IMAGE, fileName);
 
         if (isEmptyFile) {
             file.delete();
