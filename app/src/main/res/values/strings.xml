@@ -36,4 +36,5 @@
     <string name="hint_title">Please provide a title</string>
     <string name="hint_description">Please provide a proper description</string>
     <string name="add_photos">Add photos (Max 5)</string>
+    <string name="dismiss">Dismiss</string>
 </resources>

@@ -1,17 +1,22 @@
 package com.blackspider.agramonia.ui.profile
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blackspider.agramonia.R
+import com.blackspider.agramonia.data.constant.PreferenceKey
 import com.blackspider.agramonia.data.model.Blog
 import com.blackspider.agramonia.databinding.ActivityProfileBinding
+import com.blackspider.agramonia.databinding.AlertDialogBlogDetailsBinding
 import com.blackspider.agramonia.ui.base.callback.ItemClickListener
 import com.blackspider.agramonia.ui.base.component.BaseActivity
 import com.blackspider.agramonia.ui.createblog.CreateBlogActivity
+import com.blackspider.util.helper.SharedPrefUtils
 import com.blackspider.util.helper.ViewUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import io.diaryofrifat.code.basemvp.ui.base.helper.LinearMarginItemDecoration
 
 class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
@@ -33,15 +38,37 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
         mBinding = viewDataBinding as ActivityProfileBinding
         mBinding.fabCreateBlog.setOnClickListener(this)
 
+        val userName: String = SharedPrefUtils.get(PreferenceKey.USER_NAME, "Dummy Name")!! // Put the default name here
+        val userPhotoUrl: String = SharedPrefUtils.get(PreferenceKey.USER_IMAGE, "")!! // Put the default user image here
+
+        mBinding.textViewUserName.text = userName
+        Glide.with(this)
+                .asDrawable()
+                .load(userPhotoUrl)
+                .apply(RequestOptions().error(R.drawable.img_farmer)) // Put the avatar here
+                .into(mBinding.imageViewUser)
+
         ViewUtils.initializeRecyclerView(mBinding.recyclerViewBlogs,
                 BlogAdapter(),
                 object : ItemClickListener<Blog> {
                     override fun onItemClick(view: View, item: Blog) {
                         when (view.id) {
                             R.id.card_view_container -> {
-                                Toast.makeText(,
-                                        "Click on the item",
-                                        Toast.LENGTH_SHORT).show()
+                                val builder = AlertDialog.Builder(this@ProfileActivity)
+                                val dialogBinding = AlertDialogBlogDetailsBinding.inflate(layoutInflater)
+
+                                dialogBinding.textViewTitle.text = item.title
+                                dialogBinding.textViewDescription.text = item.description
+
+                                builder.setView(dialogBinding.root)
+                                builder.setCancelable(true)
+
+                                val dialog = builder.create()
+                                dialog.show()
+
+                                dialogBinding.textViewDismiss.setOnClickListener {
+                                    dialog.dismiss()
+                                }
                             }
 
                             else -> {
