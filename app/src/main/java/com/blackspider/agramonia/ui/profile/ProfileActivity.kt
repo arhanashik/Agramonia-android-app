@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blackspider.agramonia.R
+import com.blackspider.agramonia.data.constant.AppConstants
 import com.blackspider.agramonia.data.constant.PreferenceKey
 import com.blackspider.agramonia.data.model.Blog
 import com.blackspider.agramonia.databinding.ActivityProfileBinding
@@ -38,8 +39,10 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
         mBinding = viewDataBinding as ActivityProfileBinding
         mBinding.fabCreateBlog.setOnClickListener(this)
 
-        val userName: String = SharedPrefUtils.get(PreferenceKey.USER_NAME, "User Name")!! // Put the default name here
-        val userPhotoUrl: String = SharedPrefUtils.get(PreferenceKey.USER_IMAGE, "")!! // Put the default user image here
+        val userName: String = SharedPrefUtils.get(PreferenceKey.USER_NAME,
+                "User Name")!! // Put the default name here
+        val userPhotoUrl: String = SharedPrefUtils.get(PreferenceKey.USER_IMAGE,
+                AppConstants.DEFAULT_STRING)!! // Put the default user image here
 
         mBinding.textViewUserName.text = userName
         Glide.with(this)
