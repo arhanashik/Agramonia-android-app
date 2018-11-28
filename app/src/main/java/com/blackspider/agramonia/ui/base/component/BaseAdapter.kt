@@ -7,9 +7,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.blackspider.agramonia.ui.base.callback.ItemClickListener
 import com.blackspider.agramonia.ui.base.callback.ItemLongClickListener
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.subjects.BehaviorSubject
 
 abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
 
@@ -19,7 +16,6 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
     protected var mItemClickListener: ItemClickListener<T>? = null
     protected var mItemLongClickListener: ItemLongClickListener<T>? = null
     private var mItemList: MutableList<T>
-    private var mRxAdapterSize: BehaviorSubject<Int>
     private lateinit var mRecyclerView: RecyclerView
 
     /**
@@ -27,29 +23,11 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
      * */
     init {
         mItemList = ArrayList()
-        mRxAdapterSize = BehaviorSubject.create()
-        mRxAdapterSize.onNext(itemCount)
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         mRecyclerView = recyclerView
         super.onAttachedToRecyclerView(recyclerView)
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        mRxAdapterSize.onComplete()
-        super.onDetachedFromRecyclerView(recyclerView)
-    }
-
-    /**
-     * Getter method for stream of getting adapter size
-     *
-     * @return [Flowable] rx stream of adapter size
-     * */
-    fun dataChanges(): Flowable<Int> {
-        return mRxAdapterSize
-                .toFlowable(BackpressureStrategy.LATEST)
-                ?: Flowable.error(Throwable("Adapter size object is null"))
     }
 
     /**
@@ -77,7 +55,6 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
      * */
     fun setItems(itemList: MutableList<T>) {
         mItemList = itemList
-        mRxAdapterSize.onNext(itemCount)
     }
 
     /**
@@ -146,7 +123,6 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
         if (itemFromList == null) {
             mItemList.add(item)
             notifyItemInserted(mItemList.size - 1)
-            mRxAdapterSize.onNext(itemCount)
             return mItemList.size - 1
         }
 
@@ -162,7 +138,6 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
     fun addItem(item: T, position: Int) {
         mItemList.add(position, item)
         notifyItemInserted(position)
-        mRxAdapterSize.onNext(itemCount)
     }
 
     /**
@@ -187,7 +162,6 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
         val oldItemIndex = getItemPosition(oldItem)
         mItemList[oldItemIndex] = newItem
         notifyItemChanged(oldItemIndex)
-        mRxAdapterSize.onNext(itemCount)
         return oldItemIndex
     }
 
@@ -201,7 +175,6 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
         if (itemIndex < 0 || itemIndex >= mItemList.size) return
         mItemList.removeAt(itemIndex)
         notifyItemRemoved(itemIndex)
-        mRxAdapterSize.onNext(itemCount)
     }
 
     /**
@@ -210,7 +183,6 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
     fun clear() {
         mItemList.clear()
         notifyDataSetChanged()
-        mRxAdapterSize.onNext(itemCount)
     }
 
     /**

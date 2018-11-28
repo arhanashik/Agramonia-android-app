@@ -13,11 +13,10 @@ import com.blackspider.agramonia.R
 import com.blackspider.agramonia.databinding.ActivityCreateBlogBinding
 import com.blackspider.agramonia.ui.base.callback.ItemClickListener
 import com.blackspider.agramonia.ui.base.component.BaseActivity
+import com.blackspider.agramonia.ui.base.helper.LinearHorizontalMarginItemDecoration
 import com.blackspider.util.helper.ImagePicker
 import com.blackspider.util.helper.PermissionUtil
 import com.blackspider.util.helper.ViewUtils
-import io.reactivex.android.schedulers.AndroidSchedulers
-import timber.log.Timber
 
 class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>() {
     private lateinit var mBinding: ActivityCreateBlogBinding
@@ -45,6 +44,7 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
                         when (view.id) {
                             R.id.image_view_cross -> {
                                 getAdapter().removeItem(item)
+                                enableAddPhotoButton(getAdapter().itemCount)
                             }
 
                             else -> {
@@ -54,19 +54,13 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
                     }
                 }, null,
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false),
-                null, DefaultItemAnimator())
+                LinearHorizontalMarginItemDecoration(ViewUtils.getPixel(R.dimen.margin_8)),
+                DefaultItemAnimator())
+    }
 
-        presenter.compositeDisposable.add(
-                getAdapter().dataChanges()
-                        .map { it < 6 }
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            mBinding.textViewAddPhoto.isEnabled = it
-                        }, {
-                            Timber.e(it)
-                        })
-        )
+    fun enableAddPhotoButton(adapterSize: Int) {
+        val enableIt = adapterSize < 5
+        mBinding.textViewAddPhoto.isEnabled = enableIt
     }
 
     fun getAdapter(): PhotoAdapter {
@@ -120,8 +114,10 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
                 if (resultCode == Activity.RESULT_OK) {
                     val pickedImageInfo = ImagePicker.getPickedImageInfo(this, resultCode, data)
 
-                    if (pickedImageInfo.imageUri != null)
+                    if (pickedImageInfo.imageUri != null) {
                         getAdapter().addItem(pickedImageInfo.imageUri)
+                        enableAddPhotoButton(getAdapter().itemCount)
+                    }
                 } else {
                     if (resultCode != Activity.RESULT_CANCELED) {
                         Toast.makeText(this, "Could not pick image", Toast.LENGTH_SHORT).show()

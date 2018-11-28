@@ -81,8 +81,12 @@ public class ImagePicker {
 
         List<Intent> intentList = new ArrayList<>();
 
-        Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        /*Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);*/
+
+        Intent pickPhotoIntent = new Intent();
+        pickPhotoIntent.setType("image/*");
+        pickPhotoIntent.setAction(Intent.ACTION_GET_CONTENT);
 
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePhotoIntent.putExtra("return-data", true);
@@ -140,7 +144,13 @@ public class ImagePicker {
                 || intentWithImage.getData().toString().contains(imageFile.toString()));
 
         if (isCamera) { // Camera
-            selectedImageUri = Uri.fromFile(imageFile);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                selectedImageUri = FileProvider.getUriForFile(context,
+                        context.getString(R.string.file_provider_authority),
+                        imageFile);
+            } else {
+                selectedImageUri = Uri.fromFile(imageFile);
+            }
         } else { // Album
             selectedImageUri = intentWithImage.getData();
         }
