@@ -38,14 +38,14 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
         mBinding = viewDataBinding as ActivityProfileBinding
         mBinding.fabCreateBlog.setOnClickListener(this)
 
-        val userName: String = SharedPrefUtils.get(PreferenceKey.USER_NAME, "Dummy Name")!! // Put the default name here
+        val userName: String = SharedPrefUtils.get(PreferenceKey.USER_NAME, "User Name")!! // Put the default name here
         val userPhotoUrl: String = SharedPrefUtils.get(PreferenceKey.USER_IMAGE, "")!! // Put the default user image here
 
         mBinding.textViewUserName.text = userName
         Glide.with(this)
                 .asDrawable()
                 .load(userPhotoUrl)
-                .apply(RequestOptions().error(R.drawable.img_farmer)) // Put the avatar here
+                .apply(RequestOptions().error(R.drawable.ic_user_avatar)) // Put the avatar here
                 .into(mBinding.imageViewUser)
 
         ViewUtils.initializeRecyclerView(mBinding.recyclerViewBlogs,
