@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.blackspider.agramonia.data.constant.AppConstants;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,9 @@ public class ImagePicker {
     public final static int REQUEST_CODE_PICK_IMAGE = 15913;
     private final static int DEFAULT_MIN_WIDTH_QUALITY = 400; // Minimum pixels
     private final static String PICKER_TITLE = "Pick Image";
+
+    // Fields
+    private static File sCapturedImageFile;
 
     private ImagePicker() {
         // Do nothing
@@ -81,9 +86,6 @@ public class ImagePicker {
 
         List<Intent> intentList = new ArrayList<>();
 
-        /*Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);*/
-
         Intent pickPhotoIntent = new Intent();
         pickPhotoIntent.setType("image/*");
         pickPhotoIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -94,6 +96,8 @@ public class ImagePicker {
         File emptyTempFile = getEmptyTempFileForImage(context);
         if (emptyTempFile == null) {
             return null;
+        } else {
+            sCapturedImageFile = emptyTempFile;
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -134,23 +138,15 @@ public class ImagePicker {
         }
         Log.d("getPickedImageInfo", String.valueOf(resultCode));
 
-        File imageFile = getTempFileForImage(context);
-        if (imageFile == null) return null;
-
         Uri selectedImageUri;
 
         boolean isCamera = (intentWithImage == null
                 || intentWithImage.getData() == null
-                || intentWithImage.getData().toString().contains(imageFile.toString()));
+                || (intentWithImage.getAction() != null
+                && intentWithImage.getAction().equals(MediaStore.ACTION_IMAGE_CAPTURE)));
 
         if (isCamera) { // Camera
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                selectedImageUri = FileProvider.getUriForFile(context,
-                        context.getString(R.string.file_provider_authority),
-                        imageFile);
-            } else {
-                selectedImageUri = Uri.fromFile(imageFile);
-            }
+            selectedImageUri = Uri.fromFile(sCapturedImageFile);
         } else { // Album
             selectedImageUri = intentWithImage.getData();
         }
@@ -334,13 +330,13 @@ public class ImagePicker {
 
     private static File getTempFileForImage(Context context) {
         Long timeStamp = System.currentTimeMillis();
-        String imageName = AppConstants.PREFIX_IMAGE + timeStamp.toString() + AppConstants.POSTFIX_IMAGE;
+        String imageName = AppConstants.PREFIX_IMAGE + timeStamp.toString();
         return getTempFile(context, imageName, false);
     }
 
     private static File getEmptyTempFileForImage(Context context) {
         Long timeStamp = System.currentTimeMillis();
-        String imageName = AppConstants.PREFIX_IMAGE + timeStamp.toString() + AppConstants.POSTFIX_IMAGE;
+        String imageName = AppConstants.PREFIX_IMAGE + timeStamp.toString();
         return getTempFile(context, imageName, true);
     }
 
@@ -350,7 +346,15 @@ public class ImagePicker {
     }
 
     private static File getTempFile(Context context, String fileName, boolean isEmptyFile) {
-        File file = new File(AppConstants.DIRECTORY_IMAGE, fileName);
+        File storageDirectory = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File file;
+
+        try {
+            file = File.createTempFile(fileName, AppConstants.SUFFIX_IMAGE, storageDirectory);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
 
         if (isEmptyFile) {
             file.delete();

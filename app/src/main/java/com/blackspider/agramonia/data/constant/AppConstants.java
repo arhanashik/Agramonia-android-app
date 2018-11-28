@@ -1,9 +1,5 @@
 package com.blackspider.agramonia.data.constant;
 
-import android.os.Environment;
-
-import java.io.File;
-
 public interface AppConstants {
     // Invalid
     int INVALID_INTEGER = -1;
@@ -14,14 +10,11 @@ public interface AppConstants {
     int DEFAULT_INTEGER = 0;
 
     // Directory
-    String DIRECTORY_EXTERNAL_STORAGE =
-            Environment.getExternalStorageDirectory() + File.separator;
-    String DIRECTORY_ROOT = DIRECTORY_EXTERNAL_STORAGE + "/Agromonia";
-    String DIRECTORY_IMAGE = DIRECTORY_EXTERNAL_STORAGE + DIRECTORY_ROOT + "/Image/";
+    String DIRECTORY_ROOT = "/Agromonia/";
 
     // Prefix
-    String PREFIX_IMAGE = "Agromonia_IMG_";
+    String PREFIX_IMAGE = "IMG_";
 
     // Postfix
-    String POSTFIX_IMAGE = ".jpg";
+    String SUFFIX_IMAGE = ".jpg";
 }
