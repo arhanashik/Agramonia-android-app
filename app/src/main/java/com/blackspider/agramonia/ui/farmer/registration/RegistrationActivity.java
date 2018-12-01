@@ -1,33 +1,31 @@
-package com.blackspider.agramonia.ui.farmer.login;
+package com.blackspider.agramonia.ui.farmer.registration;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
 import com.blackspider.agramonia.R;
-import com.blackspider.agramonia.databinding.ActivityLoginBinding;
-import com.blackspider.agramonia.ui.farmer.registration.RegistrationActivity;
+import com.blackspider.agramonia.databinding.ActivityRegistrationBinding;
 
 import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
-    private ActivityLoginBinding mBinding;
+public class RegistrationActivity extends AppCompatActivity {
+
+    private ActivityRegistrationBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_registration);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    public void onClickLogin(View view){
+    public void onClickRegistration(View view){
         String email, password;
         if(mBinding.etEmail.getText() == null){
             mBinding.tilEmail.setErrorEnabled(true);
@@ -62,14 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         checkLogIn(email, password);
     }
 
-    public void onClickRegister(View view){
-        startActivity(new Intent(this, RegistrationActivity.class));
-    }
-
     private void checkLogIn(String email, String password){
-        mBinding.tilEmail.setEnabled(false);
-        mBinding.tilPassword.setEnabled(false);
-        mBinding.btnLogin.setEnabled(false);
         mBinding.pb.setVisibility(View.VISIBLE);
     }
 

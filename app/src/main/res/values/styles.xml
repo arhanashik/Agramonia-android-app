@@ -23,4 +23,28 @@
         <item name="android:statusBarColor" tools:targetApi="21">@color/colorPrimaryDark</item>
         <!--<item name="android:windowLightStatusBar" tools:targetApi="23">true</item>-->
     </style>
+
+    <style name="ActionButton.Medium" parent="Base.Widget.AppCompat.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:background">@drawable/btn_fill_selector</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ActionButton.Large" parent="Base.Widget.AppCompat.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:background">@drawable/btn_fill_selector</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

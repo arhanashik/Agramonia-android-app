@@ -13,12 +13,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -32,6 +30,18 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.home.HomeActivity" />
+            <intent-filter android:label="@string/filter_view_http_open_agramonia">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.agramonia.com/tourist” -->
+                <data
+                    android:host="www.agramonia.com"
+                    android:pathPrefix="/tourist"
+                    android:scheme="http" />
+                <data android:scheme="https" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.farmer.login.LoginActivity"
             android:label="@string/title_login_activity"
@@ -39,6 +49,13 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.home.HomeActivity" />
+        </activity>
+        <activity android:name=".ui.farmer.registration.RegistrationActivity"
+            android:label="@string/title_login_activity"
+            android:parentActivityName=".ui.farmer.login.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.farmer.login.LoginActivity" />
         </activity>
         <activity
             android:name="com.blackspider.util.lib.barcodescanner.SimpleScannerActivity"
