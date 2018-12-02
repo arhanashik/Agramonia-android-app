@@ -1,4 +1,4 @@
-package com.blackspider.agramonia.ui.profile
+package com.blackspider.agramonia.ui.farmer.profile
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blackspider.agramonia.R
 import com.blackspider.agramonia.data.constant.AppConstants
 import com.blackspider.agramonia.data.constant.PreferenceKey
-import com.blackspider.agramonia.data.model.Blog
+import com.blackspider.agramonia.data.local.blog.Blog
 import com.blackspider.agramonia.databinding.ActivityProfileBinding
 import com.blackspider.agramonia.databinding.AlertDialogBlogDetailsBinding
 import com.blackspider.agramonia.ui.base.callback.ItemClickListener
 import com.blackspider.agramonia.ui.base.component.BaseActivity
-import com.blackspider.agramonia.ui.createblog.CreateBlogActivity
+import com.blackspider.agramonia.ui.farmer.createblog.CreateBlogActivity
 import com.blackspider.util.helper.SharedPrefUtils
 import com.blackspider.util.helper.ViewUtils
 import com.bumptech.glide.Glide

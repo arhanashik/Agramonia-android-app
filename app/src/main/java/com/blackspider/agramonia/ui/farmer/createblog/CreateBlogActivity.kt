@@ -1,4 +1,4 @@
-package com.blackspider.agramonia.ui.createblog
+package com.blackspider.agramonia.ui.farmer.createblog
 
 import android.Manifest
 import android.app.Activity

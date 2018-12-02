@@ -1,10 +1,10 @@
-package com.blackspider.agramonia.ui.profile
+package com.blackspider.agramonia.ui.farmer.profile
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import com.blackspider.agramonia.R
-import com.blackspider.agramonia.data.model.Blog
+import com.blackspider.agramonia.data.local.blog.Blog
 import com.blackspider.agramonia.databinding.ItemBlogBinding
 import com.blackspider.agramonia.ui.base.component.BaseAdapter
 import com.blackspider.agramonia.ui.base.component.BaseViewHolder

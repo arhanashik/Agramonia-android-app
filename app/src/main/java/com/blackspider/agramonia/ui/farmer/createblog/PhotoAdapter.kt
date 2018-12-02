@@ -1,4 +1,4 @@
-package com.blackspider.agramonia.ui.createblog
+package com.blackspider.agramonia.ui.farmer.createblog
 
 import android.graphics.drawable.Drawable
 import android.net.Uri

@@ -31,6 +31,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.appcompat:appcompat:$rootProject.appcompat"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraint"
+    // reading and writing Exif tags in a JPEG file or a RAW image file
+    implementation "androidx.exifinterface:exifinterface:$rootProject.exifinterface"
     //instead of support v4
     implementation "androidx.legacy:legacy-support-v4:$rootProject.support"
     //instead of support design
@@ -41,9 +43,10 @@ dependencies {
 
     implementation "androidx.cardview:cardview:$rootProject.support"
     implementation "androidx.recyclerview:recyclerview:$rootProject.support"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation "androidx.multidex:multidex:$rootProject.multidex"
 }
 
 //3rd party
@@ -57,14 +60,17 @@ dependencies {
     //image loader
     implementation "com.github.bumptech.glide:glide:$rootProject.glide"
 
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid"
 
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit"
+
+    implementation "com.jakewharton.timber:timber:$rootProject.timber"
 
     implementation "com.jakewharton:butterknife:$rootProject.ext.butterknife_version"
     kapt "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknife_version"
-
 }
 
 //testing libs
@@ -72,13 +78,4 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junit"
     androidTestImplementation "androidx.test:runner:$rootProject.runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espresso"
-}
-
-dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.exifinterface:exifinterface:1.0.0'
-}
-repositories {
-    mavenCentral()
 }
