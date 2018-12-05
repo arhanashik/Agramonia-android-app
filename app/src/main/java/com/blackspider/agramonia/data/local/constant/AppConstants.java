@@ -1,4 +1,4 @@
-package com.blackspider.agramonia.data.constant;
+package com.blackspider.agramonia.data.local.constant;
 
 public interface AppConstants {
     // Invalid

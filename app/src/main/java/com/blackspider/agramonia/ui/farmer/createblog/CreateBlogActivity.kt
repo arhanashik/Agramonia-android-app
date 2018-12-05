@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -15,11 +16,28 @@ import com.blackspider.agramonia.ui.base.callback.ItemClickListener
 import com.blackspider.agramonia.ui.base.component.BaseActivity
 import com.blackspider.agramonia.ui.base.helper.LinearHorizontalMarginItemDecoration
 import com.blackspider.util.helper.ImagePicker
+import com.blackspider.util.helper.ImageUtil
 import com.blackspider.util.helper.PermissionUtil
 import com.blackspider.util.helper.ViewUtils
+import com.blackspider.util.lib.remote.ApiService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import timber.log.Timber
+import java.io.File
 
 class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>() {
     private lateinit var mBinding: ActivityCreateBlogBinding
+
+    private var farmerId = -1
+
+    private var disposable: Disposable? = null
+    private val apiService by lazy {
+        ApiService.create()
+    }
 
     override val layoutResourceId: Int
         get() = R.layout.activity_create_blog
@@ -33,6 +51,12 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
     }
 
     override fun startUI() {
+        farmerId = intent.getIntExtra("FARMER_ID", -1)
+        if(farmerId == -1) {
+            showToast("Invalid farmer id")
+            finish()
+        }
+
         mBinding = viewDataBinding as ActivityCreateBlogBinding
         setTitle(getString(R.string.create_blog))
         mBinding.textViewCreate.setOnClickListener(this)
@@ -59,6 +83,8 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
     }
 
     fun enableAddPhotoButton(adapterSize: Int) {
+        val txt = "Add photos ($adapterSize/5)"
+        mBinding.textViewAddPhoto.text = txt
         val enableIt = adapterSize < 5
         mBinding.textViewAddPhoto.isEnabled = enableIt
     }
@@ -69,7 +95,22 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.text_view_create -> onBackPressed()
+            R.id.text_view_create -> {
+                val title = mBinding.editTextTitle.text.toString()
+                val description = mBinding.editTextDescription.text.toString()
+
+                if(TextUtils.isEmpty(title)){
+                    showToast(getString(R.string.title_required_exception))
+                    return
+                }
+
+                if(TextUtils.isEmpty(description)) {
+                    showToast(getString(R.string.description_required_exception))
+                    return
+                }
+
+                createBlog(title, description)
+            }
 
             R.id.text_view_add_photo -> pickImage()
 
@@ -131,6 +172,68 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
         }
     }
 
+    private fun createBlog(title: String, description: String){
+        val uriList = getAdapter().getItems()
+        if(uriList.size > 0){
+            val multipartBodyParts = ArrayList<MultipartBody.Part>()
+            var i = 0
+            uriList.forEach {
+                val path = ImageUtil.getPath(this, it)
+                val mediaTypeStr = contentResolver.getType(it)
+
+                if (mediaTypeStr != null) {
+                    val mediaType = MediaType.parse(mediaTypeStr)
+                    val requestBody = RequestBody.create(mediaType, File(path))
+                    val multipartBody = MultipartBody.Part.createFormData("files[$i]",
+                            path, requestBody)
+                    multipartBodyParts.add(multipartBody)
+                    i++
+                }
+            }
+
+            showToast("Uploading images...")
+            disposable = apiService.uploadMultipleImage(multipartBodyParts)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        response1 ->
+                        showToast(response1.message)
+
+                        showToast("Creating blog...")
+                        disposable = apiService.createBlog(title, description,
+                                farmerId, response1.urls)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    response2 ->
+                                    showToast(response2.message)
+                                }, {
+                                    error ->
+                                    Timber.e(error)
+                                    showToast(error.message.toString())
+                                })
+                    }, {
+                        error ->
+                        Timber.e(error)
+                        showToast(error.message.toString())
+                    })
+        }else {
+            showToast("Creating blog...")
+            disposable = apiService.createBlog(title, description,
+                    farmerId, ArrayList<String>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        response ->
+                        showToast(response.message)
+                    }, {
+                        error ->
+                        Timber.e(error)
+                        showToast(error.message.toString())
+                    })
+        }
+    }
+
     private fun pickImage() {
         if (PermissionUtil.on().request(this,
                         PermissionUtil.REQUEST_CODE_STORAGE,
@@ -140,5 +243,14 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
 
             ImagePicker.pickImage(this)
         }
+    }
+
+    private fun showToast(message: String){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        disposable?.dispose()
+        super.onDestroy()
     }
 }

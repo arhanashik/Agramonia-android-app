@@ -75,7 +75,7 @@
                 android:value=".ui.home.HomeActivity" />
         </activity>
         <activity android:name=".ui.farmer.registration.RegistrationActivity"
-            android:label="@string/title_login_activity"
+            android:label="@string/title_registration_activity"
             android:parentActivityName=".ui.farmer.login.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

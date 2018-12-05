@@ -1,15 +1,15 @@
-package com.blackspider.agramonia.ui.farmer.login;
+package com.blackspider.agramonia.ui.farmer.login
 
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.blackspider.agramonia.R
 import com.blackspider.agramonia.databinding.ActivityLoginBinding
+import com.blackspider.agramonia.ui.farmer.profile.ProfileActivity
 import com.blackspider.agramonia.ui.farmer.registration.RegistrationActivity
 import com.blackspider.util.lib.remote.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         val email: String
         val password: String
 
-        if(mBinding.etEmail.getText() == null){
+        if(mBinding.etEmail.text == null){
             mBinding.tilEmail.isErrorEnabled = true
             mBinding.tilEmail.error = getString(R.string.email_required_exception)
             return;
@@ -83,17 +83,19 @@ class LoginActivity : AppCompatActivity() {
         disposable = apiService.login(email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { response ->
-                            showToast(response.message)
-                            blockUi(false)
-                        },
-                        { error ->
-                            Timber.e(error)
-                            showToast(error.message.toString())
-                            blockUi(false)
-                        }
-                )
+                .subscribe({
+                    response ->
+                    blockUi(false)
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    intent.putExtra("FARMER", response.farmer)
+                    startActivity(intent)
+                    finish()
+                }, {
+                    error ->
+                    Timber.e(error)
+                    showToast(error.message.toString())
+                    blockUi(false)
+                })
     }
 
     private fun showToast(message: String){

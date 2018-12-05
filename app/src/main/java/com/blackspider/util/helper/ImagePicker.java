@@ -17,7 +17,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.blackspider.agramonia.R;
-import com.blackspider.agramonia.data.constant.AppConstants;
+import com.blackspider.agramonia.data.local.constant.AppConstants;
 
 import java.io.File;
 import java.io.FileNotFoundException;

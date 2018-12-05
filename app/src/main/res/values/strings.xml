@@ -5,6 +5,7 @@
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_tourist_activity">Tourist</string>
     <string name="title_login_activity">Log in</string>
+    <string name="title_registration_activity">Registration</string>
 
     <string name="label_scan_qr_code">Scan QR Code</string>
     <string name="label_tourist_title">
@@ -13,24 +14,11 @@
     <string name="label_tourist">I am a Tourist</string>
     <string name="label_farmer">I am a Farmer</string>
     <string name="label_login">Log in</string>
+    <string name="label_registration">Registration</string>
+    <string name="label_or">Or</string>
 
     <string name="hint_email_address">Your email address</string>
     <string name="hint_password">Your password</string>
-
-    <string name="description_img_logo">Image Logo</string>
-
-    <string name="default_web_address">www.google.com</string>
-
-    <string name="invalid_qr_code_exception">Ops! Invalid QR code.</string>
-    <string name="scan_canceled_exception">Ops! Scanning canceled.</string>
-    <string name="no_browser_found_exception">Ops! Please install a browser first!</string>
-    <string name="camera_permission_denied_exception">
-        Camera permission is required to scan bar-code
-    </string>
-    <string name="email_required_exception">Email required</string>
-    <string name="password_required_exception">Password required</string>
-
-    <string name="filter_view_http_open_agramonia">Open Agramonia</string>
     <string name="hint_full_name">Full Name</string>
     <string name="hint_location">Your Location</string>
     <string name="hint_phone">Your Phone</string>
@@ -39,14 +27,37 @@
     <string name="hint_answer3">Question 3</string>
     <string name="hint_answer4">Question 4</string>
     <string name="hint_answer5">Question 5</string>
-    <string name="label_registration">Registration</string>
-    <string name="label_or">Or</string>
+    <string name="hint_title">Please provide a title</string>
+    <string name="hint_description">Please provide a proper description</string>
+
+    <string name="description_img_logo">Image Logo</string>
+    <string name="description_ic_camera">Icon camera</string>
+
+    <string name="default_web_address">www.google.com</string>
+
+    <!-- exceptions -->
+    <string name="invalid_qr_code_exception">Ops! Invalid QR code.</string>
+    <string name="scan_canceled_exception">Ops! Scanning canceled.</string>
+    <string name="no_browser_found_exception">Ops! Please install a browser first!</string>
+    <string name="camera_permission_denied_exception">
+        Camera permission is required to scan bar-code
+    </string>
+    <string name="email_required_exception">Email required</string>
+    <string name="password_required_exception">Password required</string>
+    <string name="name_required_exception">Name required</string>
+    <string name="image_required_exception">Image required</string>
+    <string name="location_required_exception">Location required</string>
+    <string name="phone_required_exception">Phone number required</string>
+    <string name="answer_required_exception">Answer required</string>
+
+    <string name="filter_view_http_open_agramonia">Open Agramonia</string>
 
     <!--Create blog page-->
     <string name="create_blog">Create Blog</string>
     <string name="create">Create</string>
-    <string name="hint_title">Please provide a title</string>
-    <string name="hint_description">Please provide a proper description</string>
-    <string name="add_photos">Add photos (Max 5)</string>
+    <string name="add_photos">Add photos (0/5)</string>
     <string name="dismiss">Dismiss</string>
+    <string name="invalid_image_exception">Invalid image</string>
+    <string name="title_required_exception">Title Required</string>
+    <string name="description_required_exception">Description required</string>
 </resources>

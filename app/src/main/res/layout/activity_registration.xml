@@ -24,9 +24,20 @@
                 app:civ_border_color="@color/colorPrimary"
                 app:civ_shadow_radius="4"
                 android:shadowColor="@color/colorPrimaryDark"
+                android:visibility="invisible"
+                android:onClick="onClickPickImage"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/til_location"/>
+
+            <ImageButton
+                android:id="@+id/btn_choose_photo"
+                android:layout_width="@dimen/avatar_width"
+                android:layout_height="@dimen/avatar_height"
+                android:background="@drawable/shape_circle"
+                app:srcCompat="@drawable/ic_camera"
+                android:contentDescription="@string/description_ic_camera"
+                android:onClick="onClickPickImage"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_name"
@@ -233,10 +244,11 @@
                 android:id="@+id/pb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:indeterminate="true"
                 android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/til_answer1"
                 app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

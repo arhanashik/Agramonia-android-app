@@ -2,27 +2,37 @@ package com.blackspider.agramonia.ui.farmer.profile
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.text.TextUtils
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blackspider.agramonia.R
-import com.blackspider.agramonia.data.constant.AppConstants
-import com.blackspider.agramonia.data.constant.PreferenceKey
 import com.blackspider.agramonia.data.local.blog.Blog
+import com.blackspider.agramonia.data.local.farmer.FarmerEntity
 import com.blackspider.agramonia.databinding.ActivityProfileBinding
 import com.blackspider.agramonia.databinding.AlertDialogBlogDetailsBinding
 import com.blackspider.agramonia.ui.base.callback.ItemClickListener
 import com.blackspider.agramonia.ui.base.component.BaseActivity
 import com.blackspider.agramonia.ui.farmer.createblog.CreateBlogActivity
-import com.blackspider.util.helper.SharedPrefUtils
+import com.blackspider.util.helper.ImageLoader
 import com.blackspider.util.helper.ViewUtils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.blackspider.util.lib.remote.ApiService
 import io.diaryofrifat.code.basemvp.ui.base.helper.LinearMarginItemDecoration
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
 
     private lateinit var mBinding: ActivityProfileBinding
+    private lateinit var farmer: FarmerEntity
+
+    private var disposable: Disposable? = null
+    private val apiService by lazy {
+        ApiService.create()
+    }
 
     override val layoutResourceId: Int
         get() = R.layout.activity_profile
@@ -36,20 +46,19 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
     }
 
     override fun startUI() {
+        farmer = intent.getParcelableExtra("FARMER")
+
+        if(TextUtils.isEmpty(farmer.name)) {
+            showToast("Invalid farmer")
+            finish()
+        }
+        Timber.d(farmer.profileImg)
+
         mBinding = viewDataBinding as ActivityProfileBinding
         mBinding.fabCreateBlog.setOnClickListener(this)
 
-        val userName: String = SharedPrefUtils.get(PreferenceKey.USER_NAME,
-                "User Name")!! // Put the default name here
-        val userPhotoUrl: String = SharedPrefUtils.get(PreferenceKey.USER_IMAGE,
-                AppConstants.DEFAULT_STRING)!! // Put the default user image here
-
-        mBinding.textViewUserName.text = userName
-        Glide.with(this)
-                .asDrawable()
-                .load(userPhotoUrl)
-                .apply(RequestOptions().error(R.drawable.ic_user_avatar)) // Put the avatar here
-                .into(mBinding.imageViewUser)
+        mBinding.textViewUserName.text = farmer.name
+        ImageLoader.load(this, mBinding.imageViewUser, farmer.profileImg)
 
         ViewUtils.initializeRecyclerView(mBinding.recyclerViewBlogs,
                 BlogAdapter(),
@@ -57,23 +66,8 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
                     override fun onItemClick(view: View, item: Blog) {
                         when (view.id) {
                             R.id.card_view_container -> {
-                                val builder = AlertDialog.Builder(this@ProfileActivity)
-                                val dialogBinding = AlertDialogBlogDetailsBinding.inflate(layoutInflater)
-
-                                dialogBinding.textViewTitle.text = item.title
-                                dialogBinding.textViewDescription.text = item.description
-
-                                builder.setView(dialogBinding.root)
-                                builder.setCancelable(true)
-
-                                val dialog = builder.create()
-                                dialog.show()
-
-                                dialogBinding.textViewDismiss.setOnClickListener {
-                                    dialog.dismiss()
-                                }
+                                showDetails(item)
                             }
-
                             else -> {
 
                             }
@@ -85,9 +79,7 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
                 LinearMarginItemDecoration(ViewUtils.getPixel(R.dimen.margin_8)),
                 DefaultItemAnimator())
 
-        for (i in 1..10) {
-            getAdapter().addItem(Blog("$i", "Title $i", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ArrayList()))
-        }
+        loadBlogList()
     }
 
     private fun getAdapter(): BlogAdapter {
@@ -100,10 +92,55 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.fab_create_blog -> startActivity(Intent(this, CreateBlogActivity::class.java))
+            R.id.fab_create_blog -> {
+                val intent = Intent(this, CreateBlogActivity::class.java)
+                intent.putExtra("FARMER_ID", farmer.id)
+                startActivity(intent)
+            }
 
             else -> {
             }
         }
+    }
+
+    private fun loadBlogList(){
+        disposable = apiService.getBlogList(farmer.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    response ->
+                    getAdapter().addItems(response)
+                }, {
+                    error ->
+                    Timber.e(error)
+                    showToast(error.message.toString())
+                })
+    }
+
+    private fun showDetails(item: Blog) {
+        val builder = AlertDialog.Builder(this)
+        val dialogBinding = AlertDialogBlogDetailsBinding.inflate(layoutInflater)
+
+        dialogBinding.textViewTitle.text = item.title
+        dialogBinding.textViewDescription.text = item.description
+
+        builder.setView(dialogBinding.root)
+        builder.setCancelable(true)
+
+        val dialog = builder.create()
+        dialog.show()
+
+        dialogBinding.textViewDismiss.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    private fun showToast(message: String){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        disposable?.dispose()
+        super.onDestroy()
     }
 }
