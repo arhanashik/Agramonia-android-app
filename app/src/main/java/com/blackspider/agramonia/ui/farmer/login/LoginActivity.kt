@@ -8,10 +8,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.blackspider.agramonia.R
+import com.blackspider.agramonia.data.local.constant.Const
+import com.blackspider.agramonia.data.local.prefs.Prefs
 import com.blackspider.agramonia.databinding.ActivityLoginBinding
 import com.blackspider.agramonia.ui.farmer.profile.ProfileActivity
 import com.blackspider.agramonia.ui.farmer.registration.RegistrationActivity
-import com.blackspider.util.lib.remote.ApiService
+import com.blackspider.util.lib.remote.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -24,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
     private var disposable: Disposable? = null
 
     private val apiService by lazy {
-        ApiService.create()
+        ApiClient.create()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,9 +88,10 @@ class LoginActivity : AppCompatActivity() {
                 .subscribe({
                     response ->
                     blockUi(false)
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    intent.putExtra("FARMER", response.farmer)
-                    startActivity(intent)
+                    Prefs.farmer = response.farmer
+                    Prefs.session = true
+
+                    startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
                 }, {
                     error ->

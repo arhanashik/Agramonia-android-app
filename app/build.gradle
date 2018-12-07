@@ -55,6 +55,10 @@ dependencies {
     //barcode scanner
     implementation "me.dm7.barcodescanner:zxing:$rootProject.barcodescanner"
 
+    //barcode creator
+    implementation "com.google.zxing:core:$rootProject.zxing"
+    implementation "com.journeyapps:zxing-android-embedded:$rootProject.zxing"
+
     // circle image
     implementation "com.mikhaellopez:circularimageview:$rootProject.circularimageview"
 

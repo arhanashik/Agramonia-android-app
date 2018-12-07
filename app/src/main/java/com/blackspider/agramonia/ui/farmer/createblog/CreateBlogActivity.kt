@@ -2,6 +2,7 @@ package com.blackspider.agramonia.ui.farmer.createblog
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blackspider.agramonia.R
+import com.blackspider.agramonia.data.local.constant.Const
 import com.blackspider.agramonia.databinding.ActivityCreateBlogBinding
 import com.blackspider.agramonia.ui.base.callback.ItemClickListener
 import com.blackspider.agramonia.ui.base.component.BaseActivity
@@ -19,7 +21,7 @@ import com.blackspider.util.helper.ImagePicker
 import com.blackspider.util.helper.ImageUtil
 import com.blackspider.util.helper.PermissionUtil
 import com.blackspider.util.helper.ViewUtils
-import com.blackspider.util.lib.remote.ApiService
+import com.blackspider.util.lib.remote.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -36,7 +38,7 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
 
     private var disposable: Disposable? = null
     private val apiService by lazy {
-        ApiService.create()
+        ApiClient.create()
     }
 
     override val layoutResourceId: Int
@@ -51,14 +53,14 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
     }
 
     override fun startUI() {
-        farmerId = intent.getIntExtra("FARMER_ID", -1)
+        farmerId = intent.getIntExtra(Const.Key.FARMER_ID, -1)
         if(farmerId == -1) {
             showToast("Invalid farmer id")
             finish()
         }
 
         mBinding = viewDataBinding as ActivityCreateBlogBinding
-        setTitle(getString(R.string.create_blog))
+        setTitle(getString(R.string.label_create_blog))
         mBinding.textViewCreate.setOnClickListener(this)
         mBinding.textViewAddPhoto.setOnClickListener(this)
 
@@ -109,7 +111,22 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
                     return
                 }
 
-                createBlog(title, description)
+                val dialog = AlertDialog.Builder(this)
+                        .setMessage(getString(R.string.create_blog_confirmation))
+                        .setPositiveButton(getString(R.string.label_create))
+                        {
+                            dialog, _ ->
+                            dialog.dismiss()
+                            createBlog(title, description)
+                        }
+                        .setNegativeButton(getString(R.string.label_cancel))
+                        {
+                            dialog, _->
+                            dialog.dismiss()
+                        }
+                        .create()
+
+                dialog.show()
             }
 
             R.id.text_view_add_photo -> pickImage()
@@ -173,6 +190,8 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
     }
 
     private fun createBlog(title: String, description: String){
+        blockUi(true)
+
         val uriList = getAdapter().getItems()
         if(uriList.size > 0){
             val multipartBodyParts = ArrayList<MultipartBody.Part>()
@@ -191,15 +210,15 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
                 }
             }
 
-            showToast("Uploading images...")
+            showToast("Uploading ${multipartBodyParts.size} images...")
             disposable = apiService.uploadMultipleImage(multipartBodyParts)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         response1 ->
-                        showToast(response1.message)
+                        showToast(response1.message + ". Creating blog...")
 
-                        showToast("Creating blog...")
+                        Timber.d("${response1.urls.size} urls: %s", response1.urls[0])
                         disposable = apiService.createBlog(title, description,
                                 farmerId, response1.urls)
                                 .subscribeOn(Schedulers.io())
@@ -207,13 +226,19 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
                                 .subscribe({
                                     response2 ->
                                     showToast(response2.message)
+                                    val replyIntent = Intent()
+                                    replyIntent.putExtra(Const.Key.BLOG, response2.blog)
+                                    setResult(Activity.RESULT_OK, replyIntent)
+                                    finish()
                                 }, {
                                     error ->
+                                    blockUi(false)
                                     Timber.e(error)
                                     showToast(error.message.toString())
                                 })
                     }, {
                         error ->
+                        blockUi(false)
                         Timber.e(error)
                         showToast(error.message.toString())
                     })
@@ -226,8 +251,15 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
                     .subscribe({
                         response ->
                         showToast(response.message)
+                        if(response.success) {
+                            val replyIntent = Intent()
+                            replyIntent.putExtra(Const.Key.BLOG, response.blog)
+                            setResult(Activity.RESULT_OK, replyIntent)
+                            finish()
+                        }
                     }, {
                         error ->
+                        blockUi(false)
                         Timber.e(error)
                         showToast(error.message.toString())
                     })
@@ -243,6 +275,14 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
 
             ImagePicker.pickImage(this)
         }
+    }
+
+    private fun blockUi(block: Boolean){
+        mBinding.editTextTitle.isEnabled = !block
+        mBinding.editTextDescription.isEnabled = !block
+        mBinding.textViewAddPhoto.isEnabled = !block
+        if(!block) enableAddPhotoButton(getAdapter().itemCount)
+        mBinding.pb.visibility = if(block) View.VISIBLE else View.GONE
     }
 
     private fun showToast(message: String){

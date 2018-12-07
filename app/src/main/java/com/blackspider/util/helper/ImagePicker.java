@@ -17,7 +17,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.blackspider.agramonia.R;
-import com.blackspider.agramonia.data.local.constant.AppConstants;
+import com.blackspider.agramonia.data.local.constant.Const;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,6 +55,21 @@ public class ImagePicker {
 
             if (imagePickingIntent != null) {
                 activity.startActivityForResult(imagePickingIntent, REQUEST_CODE_PICK_IMAGE);
+            }
+        }
+    }
+
+    /**
+     * This method picks image from gallery, photos and camera of device
+     *
+     * @param activity current activity
+     */
+    public synchronized static void pickImage(Activity activity, int requestCode) {
+        if (activity != null) {
+            Intent imagePickingIntent = getImagePickingIntent(activity);
+
+            if (imagePickingIntent != null) {
+                activity.startActivityForResult(imagePickingIntent, requestCode);
             }
         }
     }
@@ -330,13 +345,13 @@ public class ImagePicker {
 
     private static File getTempFileForImage(Context context) {
         Long timeStamp = System.currentTimeMillis();
-        String imageName = AppConstants.PREFIX_IMAGE + timeStamp.toString();
+        String imageName = Const.PREFIX_IMAGE + timeStamp.toString();
         return getTempFile(context, imageName, false);
     }
 
     private static File getEmptyTempFileForImage(Context context) {
         Long timeStamp = System.currentTimeMillis();
-        String imageName = AppConstants.PREFIX_IMAGE + timeStamp.toString();
+        String imageName = Const.PREFIX_IMAGE + timeStamp.toString();
         return getTempFile(context, imageName, true);
     }
 
@@ -350,7 +365,7 @@ public class ImagePicker {
         File file;
 
         try {
-            file = File.createTempFile(fileName, AppConstants.SUFFIX_IMAGE, storageDirectory);
+            file = File.createTempFile(fileName, Const.SUFFIX_IMAGE, storageDirectory);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

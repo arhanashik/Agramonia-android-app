@@ -91,6 +91,15 @@
         </activity>
 
         <activity
+            android:name=".ui.farmer.barcodegenerator.BarcodeGeneratorActivity"
+            android:label="@string/title_scanner_activity"
+            android:parentActivityName=".ui.farmer.profile.ProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.farmer.profile.ProfileActivity" />
+        </activity>
+
+        <activity
             android:name=".ui.farmer.createblog.CreateBlogActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ui.farmer.profile.ProfileActivity">

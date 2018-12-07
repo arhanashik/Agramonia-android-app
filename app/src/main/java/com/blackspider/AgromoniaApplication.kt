@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.blackspider.agramonia.BuildConfig
+import com.blackspider.agramonia.data.local.prefs.Prefs
 import timber.log.Timber
 
 class AgromoniaApplication : MultiDexApplication() {
@@ -40,7 +41,7 @@ class AgromoniaApplication : MultiDexApplication() {
     }
 
     private fun initiate(context: Context) {
-
+        Prefs.init(context)
     }
 
     override fun attachBaseContext(base: Context?) {
