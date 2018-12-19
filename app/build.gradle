@@ -64,6 +64,7 @@ dependencies {
 
     //image loader
     implementation "com.github.bumptech.glide:glide:$rootProject.glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide"
 
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid"

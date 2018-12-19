@@ -10,7 +10,7 @@ class ApiClient {
             val retrofit = Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://192.168.1.105/agramonia-website/")
+                    .baseUrl("http://www.agramonia.com/")
                     .build()
 
             return retrofit.create(ApiService::class.java)

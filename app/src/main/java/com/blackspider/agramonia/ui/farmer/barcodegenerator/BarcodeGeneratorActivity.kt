@@ -26,7 +26,8 @@ class BarcodeGeneratorActivity: AppCompatActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_barcode_generator)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val text= "https://${getString(R.string.default_web_address)}/farmers/id=${Prefs.farmer?.id}"
+        val text= "http://${getString(R.string.default_web_address)}" +
+                "${getString(R.string.path_to_farmer_profile)}${Prefs.farmer?.id}"
         val multiFormatWriter = MultiFormatWriter()
 
         mBinding.tvBarcode.text = text

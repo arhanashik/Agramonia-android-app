@@ -57,7 +57,8 @@
     <string name="description_img_logo">Image Logo</string>
     <string name="description_ic_camera">Icon camera</string>
 
-    <string name="default_web_address">www.google.com</string>
+    <string name="default_web_address">www.agramonia.com</string>
+    <string name="path_to_farmer_profile">/farmer/</string>
 
     <!-- exceptions -->
     <string name="invalid_qr_code_exception">Ops! Invalid QR code.</string>
