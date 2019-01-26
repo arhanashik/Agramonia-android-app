@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion target_sdk
     defaultConfig {
-        applicationId "com.blackspider.agramonia"
+        applicationId 'com.workfort.apps.agramonia'
         minSdkVersion min_sdk
         targetSdkVersion target_sdk
         versionCode version_code
@@ -26,10 +26,20 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def project = "agramonia"
+            def version = "v1"
+
+            def newApkName = project + "_" + version + ".apk"
+
+            outputFileName = new File(newApkName)
+        }
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$rootProject.appcompat"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraint"
     // reading and writing Exif tags in a JPEG file or a RAW image file
@@ -38,15 +48,11 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$rootProject.support"
     //instead of support design
     implementation "com.google.android.material:material:$rootProject.material"
-
     // LiveData + ViewModel
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle"
-
     implementation "androidx.cardview:cardview:$rootProject.support"
     implementation "androidx.recyclerview:recyclerview:$rootProject.support"
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     implementation "androidx.multidex:multidex:$rootProject.multidex"
 }
 
@@ -72,6 +78,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.retrofit"
 
     implementation "com.jakewharton.timber:timber:$rootProject.timber"
 

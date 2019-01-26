@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Agramonia</string>
+    <string name="app_name" translatable="false">Agramonia</string>
     <string name="file_provider_authority" translatable="false">com.blackspider.agramonia.fileprovider</string>
 
     <string name="title_scanner_activity">Scanner</string>
@@ -33,11 +33,10 @@
     <string name="hint_location">Your Location</string>
     <string name="hint_phone">Your Phone</string>
     <string name="hint_answer1">
-        What’s the name of your kids, and what are their dreams and aspirations?
+        How many people are in your family and what are their dreams and aspirations?
     </string>
     <string name="hint_answer2">
-        If given the possibility, would you host a dinner for one of the customers who bought
-        your products?
+        If given the possibility, would you host a dinner for one of the customers who bought your products?
     </string>
     <string name="hint_answer3">
         Would you consider industrialization of the farming process is a good thing? Why?
@@ -54,15 +53,15 @@
     <string name="hint_generating_barcode">Generating barcode</string>
     <string name="hint_barcode_generated">Generating barcode</string>
 
-    <string name="description_img_logo">Image Logo</string>
-    <string name="description_ic_camera">Icon camera</string>
+    <string name="description_img_logo" translatable="false">Image Logo</string>
+    <string name="description_ic_camera" translatable="false">Icon camera</string>
 
-    <string name="default_web_address">www.agramonia.com</string>
-    <string name="path_to_farmer_profile">/farmer/</string>
+    <string name="default_web_address" translatable="false">www.agramonia.com</string>
+    <string name="path_to_farmer_profile" translatable="false">/farmer/</string>
 
     <!-- exceptions -->
-    <string name="invalid_qr_code_exception">Ops! Invalid QR code.</string>
-    <string name="scan_canceled_exception">Ops! Scanning canceled.</string>
+    <string name="invalid_qr_code_exception">Oops! Invalid QR code.</string>
+    <string name="scan_canceled_exception">Oops! Scanning cancelled.</string>
     <string name="no_browser_found_exception">Ops! Please install a browser first!</string>
     <string name="camera_permission_denied_exception">
         Camera permission is required to scan bar-code
@@ -80,24 +79,63 @@
 
     <string name="filter_view_http_open_agramonia">Open Agramonia</string>
 
-    <string name="hint_answer1_bn">
-        Cum se numesc copiii dvs si care sunt visurile si aspiratiile lor?
-    </string>
-    <string name="hint_answer2_bn">
-        Daca ati avea posibilitatea, ati invita unul din clientii ce v-au cumparat produsul
-        a o cina?
-    </string>
-    <string name="hint_answer3_bn">
-        Considerati ca industrializarea agriculturii este un lucru bun? De ce?
-    </string>
-    <string name="hint_answer4_bn">
-        Ce parere aveti de faptul ca produsele dvs sunt vandute in strainatate?
-    </string>
-    <string name="hint_answer5_bn">
-        Ati dori sa le transmiteti ceva oamenilor ce locuiesc in marile orase?
-    </string>
-
     <string name="logout_confirmation">Are you surely want to logout?</string>
     <string name="create_blog_confirmation">Create this blog?</string>
     <string name="create_profile_confirmation">Create profile?</string>
+
+    <string name="change_language">Change language</string>
+    <string name="select_language">Select language</string>
+
+    <string name="question_1_en" translatable="false">
+        How many people are in your family and what are their dreams and aspirations?
+    </string>
+    <string name="question_2_en" translatable="false">
+        If given the possibility, would you host a dinner for one of the customers who bought
+        your products?
+    </string>
+    <string name="question_3_en" translatable="false">
+        Would you consider industrialization of the farming process is a good thing? Why?
+    </string>
+    <string name="question_4_en" translatable="false">
+        How do you feel knowing your marmalade is being sold abroad?
+    </string>
+    <string name="question_5_en" translatable="false">
+        Would you like to say anything to the people living in big cities?
+    </string>
+
+    <string name="question_1_de" translatable="false">
+        Wie viele Mitglieder hat deine Familie? Von was träumen diese und was sind ihre
+        Bestrebungen?
+    </string>
+    <string name="question_2_de" translatable="false">
+        Wenn Sie die Möglichkeit hätten, würden Sie gerne die Kunden eines Ihrer Produkte zum
+        Abendessen laden?
+    </string>
+    <string name="question_3_de" translatable="false">
+        Würden sie die Industrialisierung der Landwirtschaft insgesamt als eine eher positive,
+        oder eher negative Tendenz beschreiben? Wieso?
+    </string>
+    <string name="question_4_de" translatable="false">
+        Wie fühlt es sich an zu wissen, dass ihre Marmelade in anderen Ländern verkauft wird?
+    </string>
+    <string name="question_5_de" translatable="false">
+        Was wollen Sie zu den Menschen sagen, die in Großstädten Leben?
+    </string>
+
+    <string name="question_1_ro" translatable="false">
+        Cați membri are familia dvs si care sunt visurile si aspirațiile lor?
+    </string>
+    <string name="question_2_ro" translatable="false">
+        Daca ati avea posibilitatea, ati invita unul din clientii ce v-au cumparat produsul
+        a o cina?
+    </string>
+    <string name="question_3_ro" translatable="false">
+        Considerati ca industrializarea agriculturii este un lucru bun? De ce?
+    </string>
+    <string name="question_4_ro" translatable="false">
+        Ce parere aveti de faptul ca produsele dvs sunt vandute in strainatate?
+    </string>
+    <string name="question_5_ro" translatable="false">
+        Ati dori sa le transmiteti ceva oamenilor ce locuiesc in marile orase?
+    </string>
 </resources>

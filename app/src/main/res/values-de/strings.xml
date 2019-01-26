@@ -1,0 +1,84 @@
+<resources>
+    <string name="title_scanner_activity">Scanner</string>
+    <string name="title_tourist_activity">Tourist</string>
+    <string name="title_login_activity">Log in</string>
+    <string name="title_registration_activity">Registrierung</string>
+    <string name="title_barcode_generator_activity">Barcode Generator</string>
+
+    <string name="label_scan_qr_code">Scannen Sie den QR-Code</string>
+    <string name="label_tourist_title">
+        Hallo!\nBitte scannen Sie den Qr-Code um rauszufinden wer Ihr Produkt hergestellt hat.
+    </string>
+    <string name="label_tourist">Ich bin ein Tourist</string>
+    <string name="label_farmer">Ich bin ein Landwirt</string>
+    <string name="label_login">Log in</string>
+    <string name="label_registration">Registrierung</string>
+    <string name="label_or">oder</string>
+    <string name="label_create_blog">Mache einen Blog</string>
+    <string name="label_create">Schaffe</string>
+    <string name="label_barcode">Barcode</string>
+    <string name="label_logout">Log out</string>
+    <string name="label_yes">Ja</string>
+    <string name="label_cancel">lösche</string>
+    <string name="label_add_photos">Füge ein Foto hinzu (0/5)</string>
+    <string name="label_dismiss">Misserfolg</string>
+    <string name="label_no_blog">Kein Blog gefunden </string>
+
+    <string name="hint_email_address">Ihre Emailadresse</string>
+    <string name="hint_password">Ihr Passwort</string>
+    <string name="hint_full_name">Ihr Name</string>
+    <string name="hint_location">Ihr Ort</string>
+    <string name="hint_phone">Ihre Telefonnummer</string>
+    <string name="hint_answer1">
+        Wie viele Mitglieder hat deine Familie? Von was träumen diese und was sind ihre
+        Bestrebungen?
+    </string>
+    <string name="hint_answer2">
+        Wenn Sie die Möglichkeit hätten, würden Sie gerne die Kunden eines Ihrer Produkte zum
+        Abendessen laden?
+    </string>
+    <string name="hint_answer3">
+        Würden sie die Industrialisierung der Landwirtschaft insgesamt als eine eher positive,
+        oder eher negative Tendenz beschreiben? Wieso?
+    </string>
+    <string name="hint_answer4">
+        Wie fühlt es sich an zu wissen, dass ihre Marmelade in anderen Ländern verkauft wird?
+    </string>
+    <string name="hint_answer5">
+        Was wollen Sie zu den Menschen sagen, die in Großstädten Leben?
+    </string>
+    <string name="hint_title">Bitte geben Sie eine Überschrift an</string>
+    <string name="hint_description">Bitte geben Sie eine genaue Beschreibung an</string>
+    <string name="hint_answer">Deine Antwort</string>
+    <string name="hint_generating_barcode">Barcode generieren</string>
+    <string name="hint_barcode_generated">Barcode generieren</string>
+
+    <!-- exceptions -->
+    <string name="invalid_qr_code_exception">Ups! Ungültiger QR-Code</string>
+    <string name="scan_canceled_exception">Ups! Scannen abgebrochen</string>
+    <string name="no_browser_found_exception">
+        Ups! Bitte installieren Sie zuerst einen Browser
+    </string>
+    <string name="camera_permission_denied_exception">
+        Zum Scannen von Barcodes ist die Berechtigung der Kamera erforderlich
+    </string>
+    <string name="email_required_exception">E-Mail erforderlich</string>
+    <string name="password_required_exception">Passwort erforderlich</string>
+    <string name="name_required_exception">Name erforderlich</string>
+    <string name="image_required_exception">Bild erforderlich</string>
+    <string name="location_required_exception">Standort erforderlich</string>
+    <string name="phone_required_exception">Telefonnummer erforderlich</string>
+    <string name="answer_required_exception">Antwort erforderlich</string>
+    <string name="invalid_image_exception">Ungültiges Bild</string>
+    <string name="title_required_exception">Überschrift erforderlich</string>
+    <string name="description_required_exception">Beschreibung erforderlich</string>
+
+    <string name="filter_view_http_open_agramonia">Öffnen Sie agramonia</string>
+
+    <string name="logout_confirmation">Möchten Sie sich sicher ausloggen?</string>
+    <string name="create_blog_confirmation">Blog erstellen?</string>
+    <string name="create_profile_confirmation">Profil erstellen?</string>
+
+    <string name="change_language">Sprache ändern</string>
+    <string name="select_language">Sprache auswählen</string>
+</resources>

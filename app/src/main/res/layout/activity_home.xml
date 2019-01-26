@@ -105,5 +105,13 @@
             app:layout_constraintTop_toTopOf="@+id/img_farmer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/img_farmer"/>
+
+        <TextView
+            android:id="@+id/tv_language"
+            style="@style/ActionButton"
+            android:text="@string/change_language"
+            android:onClick="onClickChangeLanguage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

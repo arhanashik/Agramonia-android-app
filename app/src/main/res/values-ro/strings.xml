@@ -1,0 +1,82 @@
+<resources>
+    <string name="title_scanner_activity">Scaner</string>
+    <string name="title_tourist_activity">Turist</string>
+    <string name="title_login_activity">Conectați-vă</string>
+    <string name="title_registration_activity">Înregistrare</string>
+    <string name="title_barcode_generator_activity">Generator de coduri de bare</string>
+
+    <string name="label_scan_qr_code">Scanați codul QR</string>
+    <string name="label_tourist_title">
+        Bună ziua!\nScanați codul Qr pentru a afla cine a produs produsul dvs.
+    </string>
+    <string name="label_tourist">Sunt un turist</string>
+    <string name="label_farmer">Sunt Fermier</string>
+    <string name="label_login">Conectați-vă</string>
+    <string name="label_registration">Înregistrare</string>
+    <string name="label_or">sau</string>
+    <string name="label_create_blog">Faceți un blog</string>
+    <string name="label_create">Creați</string>
+    <string name="label_barcode">Codul de bare</string>
+    <string name="label_logout">Deconectați-vă</string>
+    <string name="label_yes">Da</string>
+    <string name="label_cancel">Ștergeți</string>
+    <string name="label_add_photos">Adaugă o fotografie (0/5)</string>
+    <string name="label_dismiss">Nerespectarea</string>
+    <string name="label_no_blog">Nu a fost găsit niciun blog</string>
+
+    <string name="hint_email_address">Adresa dvs. de e-mail</string>
+    <string name="hint_password">Parola ta</string>
+    <string name="hint_full_name">Numele dvs</string>
+    <string name="hint_location">Locul tău</string>
+    <string name="hint_phone">Numărul dvs. de telefon</string>
+    <string name="hint_answer1">
+        Cați membri are familia dvs si care sunt visurile si aspirațiile lor?
+    </string>
+    <string name="hint_answer2">
+        Daca ati avea posibilitatea, ati invita unul din clientii ce v-au cumparat produsul
+        a o cina?
+    </string>
+    <string name="hint_answer3">
+        Considerati ca industrializarea agriculturii este un lucru bun? De ce?
+    </string>
+    <string name="hint_answer4">
+        Ce parere aveti de faptul ca produsele dvs sunt vandute in strainatate?
+    </string>
+    <string name="hint_answer5">
+        Ati dori sa le transmiteti ceva oamenilor ce locuiesc in marile orase?
+    </string>
+    <string name="hint_title">Vă rugăm să furnizați un titlu</string>
+    <string name="hint_description">Vă rugăm să oferiți o descriere adecvată</string>
+    <string name="hint_answer">Răspunsul dvs</string>
+    <string name="hint_generating_barcode">Generarea de coduri de bare</string>
+    <string name="hint_barcode_generated">Generarea de coduri de bare</string>
+
+    <!-- exceptions -->
+    <string name="invalid_qr_code_exception">Oops! Cod QR nevalid</string>
+    <string name="scan_canceled_exception">Oops! Scanarea a fost anulată</string>
+    <string name="no_browser_found_exception">
+        Oops! Vă rugăm să instalați mai întâi un browser
+    </string>
+    <string name="camera_permission_denied_exception">
+        Pentru scanarea codului de bare este necesară permisiunea camerei
+    </string>
+    <string name="email_required_exception">E-mailul este necesar</string>
+    <string name="password_required_exception">Parola necesară</string>
+    <string name="name_required_exception">Numele necesar</string>
+    <string name="image_required_exception">Imagine necesară</string>
+    <string name="location_required_exception">Locația necesară</string>
+    <string name="phone_required_exception">Este necesar un număr de telefon</string>
+    <string name="answer_required_exception">Răspuns necesar</string>
+    <string name="invalid_image_exception">Imagine nevalidă</string>
+    <string name="title_required_exception">Titlul necesar</string>
+    <string name="description_required_exception">Este necesară descrierea</string>
+
+    <string name="filter_view_http_open_agramonia">Deschideți agramonia</string>
+
+    <string name="logout_confirmation">Doriți să vă deconectați în siguranță?</string>
+    <string name="create_blog_confirmation">Creați acest blog?</string>
+    <string name="create_profile_confirmation">Creați un profil?</string>
+
+    <string name="change_language">Schimbați limba</string>
+    <string name="select_language">Selecteaza limba</string>
+</resources>
