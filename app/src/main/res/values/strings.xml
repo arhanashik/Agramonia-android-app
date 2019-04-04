@@ -26,29 +26,31 @@
     <string name="label_add_photos">Add photos (0/5)</string>
     <string name="label_dismiss">Dismiss</string>
     <string name="label_no_blog">No blog found</string>
+    <string name="label_save">Save</string>
 
     <string name="hint_email_address">Your email address</string>
     <string name="hint_password">Your password</string>
     <string name="hint_full_name">Full Name</string>
     <string name="hint_location">Your Location</string>
-    <string name="hint_phone">Your Phone</string>
+    <string name="hint_phone">Your Phone Number</string>
     <string name="hint_answer1">
-        How many people are in your family and what are their dreams and aspirations?
+        1.	Do you have animals? Can you show them to us?
     </string>
     <string name="hint_answer2">
-        If given the possibility, would you host a dinner for one of the customers who bought your products?
+        2.	Do you like your animals? Which one is your favourite? Why?
     </string>
     <string name="hint_answer3">
-        Would you consider industrialization of the farming process is a good thing? Why?
+        3.	Can you show us some pictures of your Home? What do you produce at home?
+        Where you have learned all this?
     </string>
     <string name="hint_answer4">
-        How do you feel knowing your marmalade is being sold abroad?
+        4.	Would you like to say anything to the people living in big cities?
     </string>
     <string name="hint_answer5">
-        Would you like to say anything to the people living in big cities?
+        5.	What is your hope for the future?
     </string>
-    <string name="hint_title">Please provide a title</string>
-    <string name="hint_description">Please provide a proper description</string>
+    <string name="hint_title">Please type a title</string>
+    <string name="hint_description">Please type a proper description</string>
     <string name="hint_answer">Your answer</string>
     <string name="hint_generating_barcode">Generating barcode</string>
     <string name="hint_barcode_generated">Generating barcode</string>
@@ -87,20 +89,26 @@
     <string name="select_language">Select language</string>
 
     <string name="question_1_en" translatable="false">
-        How many people are in your family and what are their dreams and aspirations?
+        <!--How many people are in your family and what are their dreams and aspirations?-->
+        1.	Do you have animals? Can you show them to us?
     </string>
     <string name="question_2_en" translatable="false">
-        If given the possibility, would you host a dinner for one of the customers who bought
-        your products?
+        <!--If given the possibility, would you host a dinner for one of the customers who bought-->
+        <!--your products?-->
+        2.	Do you like your animals? Which one is your favourite? Why?
     </string>
     <string name="question_3_en" translatable="false">
-        Would you consider industrialization of the farming process is a good thing? Why?
+        <!--Would you consider industrialization of the farming process is a good thing? Why?-->
+        3.	Can you show us some pictures of your Home? What do you produce at home?
+        Where you have learned all this?
     </string>
     <string name="question_4_en" translatable="false">
-        How do you feel knowing your marmalade is being sold abroad?
+        <!--How do you feel knowing your marmalade is being sold abroad?-->
+        4.	Would you like to say anything to the people living in big cities?
     </string>
     <string name="question_5_en" translatable="false">
-        Would you like to say anything to the people living in big cities?
+        <!--Would you like to say anything to the people living in big cities?-->
+        5.	What is your hope for the future?
     </string>
 
     <string name="question_1_de" translatable="false">
@@ -138,4 +146,9 @@
     <string name="question_5_ro" translatable="false">
         Ati dori sa le transmiteti ceva oamenilor ce locuiesc in marile orase?
     </string>
+    <string name="label_add_answer_photos">Add Photo</string>
+    <string name="question_save_message">Save the information?</string>
+    <string name="unknown_exception">Ops! Please try again.</string>
+    <string name="label_create_service">Create Service</string>
+    <string name="hint_price">Please type a price</string>
 </resources>

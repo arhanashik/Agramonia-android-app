@@ -23,6 +23,7 @@
     <string name="label_add_photos">Adaugă o fotografie (0/5)</string>
     <string name="label_dismiss">Nerespectarea</string>
     <string name="label_no_blog">Nu a fost găsit niciun blog</string>
+    <string name="label_save">Salvați</string>
 
     <string name="hint_email_address">Adresa dvs. de e-mail</string>
     <string name="hint_password">Parola ta</string>

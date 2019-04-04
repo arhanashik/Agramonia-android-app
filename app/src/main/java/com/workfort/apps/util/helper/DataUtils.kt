@@ -1,6 +1,6 @@
 package com.workfort.apps.util.helper
 
-import com.workfort.apps.AgromoniaApp
+import com.workfort.apps.AgramoniaApp
 import java.util.*
 
 class DataUtils private constructor() {
@@ -32,7 +32,7 @@ class DataUtils private constructor() {
          * @return desired string
          * */
         fun getString(resourceId: Int): String {
-            return AgromoniaApp.getBaseApplicationContext().getString(resourceId)
+            return AgramoniaApp.getBaseApplicationContext().getString(resourceId)
         }
 
         /**

@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.workfort.apps.agramonia.R;
+import com.workfort.apps.agramoniaapp.R;
 import com.google.zxing.Result;
 
 import androidx.annotation.NonNull;

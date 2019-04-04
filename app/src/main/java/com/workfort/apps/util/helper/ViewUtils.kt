@@ -13,10 +13,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
-import com.workfort.apps.AgromoniaApp
-import com.workfort.apps.agramonia.ui.base.callback.ItemClickListener
-import com.workfort.apps.agramonia.ui.base.callback.ItemLongClickListener
-import com.workfort.apps.agramonia.ui.base.component.BaseAdapter
+import com.workfort.apps.AgramoniaApp
+import com.workfort.apps.agramoniaapp.ui.base.callback.ItemClickListener
+import com.workfort.apps.agramoniaapp.ui.base.callback.ItemLongClickListener
+import com.workfort.apps.agramoniaapp.ui.base.component.BaseAdapter
 
 
 class ViewUtils {
@@ -27,7 +27,7 @@ class ViewUtils {
          * @return desired resources
          * */
         fun getResources(): Resources {
-            return AgromoniaApp.getBaseApplicationContext().resources
+            return AgramoniaApp.getBaseApplicationContext().resources
         }
 
         /**
@@ -55,7 +55,7 @@ class ViewUtils {
          * @return desired font
          * */
         fun getFont(resourceId: Int): Typeface? {
-            return ResourcesCompat.getFont(AgromoniaApp.getBaseApplicationContext(),
+            return ResourcesCompat.getFont(AgramoniaApp.getBaseApplicationContext(),
                     resourceId)
         }
 
@@ -67,7 +67,7 @@ class ViewUtils {
          * */
         fun getDrawable(resourceId: Int): Drawable? {
             return ContextCompat.getDrawable(
-                    AgromoniaApp.getBaseApplicationContext(),
+                    AgramoniaApp.getBaseApplicationContext(),
                     resourceId)
         }
 
@@ -79,7 +79,7 @@ class ViewUtils {
          * */
         fun getColor(colorResourceId: Int): Int {
             return ContextCompat.getColor(
-                    AgromoniaApp.getBaseApplicationContext(),
+                    AgramoniaApp.getBaseApplicationContext(),
                     colorResourceId)
         }
 

@@ -2,11 +2,11 @@ package com.workfort.apps.util.helper
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.workfort.apps.AgromoniaApp
+import com.workfort.apps.AgramoniaApp
 
 object SharedPrefUtils {
     val preferences: SharedPreferences = PreferenceManager
-            .getDefaultSharedPreferences(AgromoniaApp.getBaseApplicationContext())
+            .getDefaultSharedPreferences(AgramoniaApp.getBaseApplicationContext())
 
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
         val editor = this.edit()

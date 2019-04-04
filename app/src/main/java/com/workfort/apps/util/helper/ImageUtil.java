@@ -6,9 +6,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Base64;
 
+import com.workfort.apps.AgramoniaApp;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class ImageUtil {
     public static String base64Encode(String filePath){
@@ -35,5 +45,41 @@ public class ImageUtil {
         String s=cursor.getString(column_index);
         cursor.close();
         return s;
+    }
+
+    public static MultipartBody.Part getMultiPartBody(Uri uri) {
+        Context ctx = AgramoniaApp.Companion.getBaseApplicationContext();
+        String path = ImageUtil.getPath(ctx, uri);
+        String mediaTypeStr = ctx.getContentResolver().getType(uri);
+
+        if (!TextUtils.isEmpty(path) && !TextUtils.isEmpty(mediaTypeStr)) {
+            MediaType mediaType = MediaType.parse(mediaTypeStr);
+            RequestBody requestBody = RequestBody.create(mediaType, new File(path));
+            return MultipartBody.Part.createFormData("file", path, requestBody);
+        }
+
+        return null;
+    }
+
+    public static ArrayList<MultipartBody.Part> getMultiPartBody(List<Uri> uri) {
+        ArrayList<MultipartBody.Part> multipartBodyParts = new ArrayList<>();
+
+        int fileNo = 0;
+        for (int i = 0; i < uri.size(); i++) {
+            Context ctx = AgramoniaApp.Companion.getBaseApplicationContext();
+            String path = ImageUtil.getPath(ctx, uri.get(i));
+            String mediaTypeStr = ctx.getContentResolver().getType(uri.get(i));
+
+            if (!TextUtils.isEmpty(path) && !TextUtils.isEmpty(mediaTypeStr)) {
+                MediaType mediaType = MediaType.parse(mediaTypeStr);
+                RequestBody requestBody = RequestBody.create(mediaType, new File(path));
+                MultipartBody.Part multipartBody = MultipartBody.Part
+                        .createFormData("files["+fileNo+"]", path, requestBody);
+                multipartBodyParts.add(multipartBody);
+                fileNo++;
+            }
+        }
+
+        return multipartBodyParts;
     }
 }

@@ -23,6 +23,7 @@
     <string name="label_add_photos">Füge ein Foto hinzu (0/5)</string>
     <string name="label_dismiss">Misserfolg</string>
     <string name="label_no_blog">Kein Blog gefunden </string>
+    <string name="label_save">Sparen</string>
 
     <string name="hint_email_address">Ihre Emailadresse</string>
     <string name="hint_password">Ihr Passwort</string>

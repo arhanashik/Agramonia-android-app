@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.workfort.apps.agramonia">
+    package="com.workfort.apps.agramoniaapp">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -13,13 +13,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.workfort.apps.AgromoniaApp"
+        android:name="com.workfort.apps.AgramoniaApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="GoogleAppIndexingWarning">
         <!--android:networkSecurityConfig="@xml/network_security_config"-->
 
@@ -34,7 +35,7 @@
         </provider>
 
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="com.workfort.apps.agramoniaapp.ui.splash.SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
@@ -43,15 +44,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name="com.workfort.apps.agramoniaapp.ui.home.HomeActivity"
             android:theme="@style/AppTheme.NoToolbar" />
         <activity
-            android:name=".ui.tourist.TouristActivity"
+            android:name="com.workfort.apps.agramoniaapp.ui.tourist.TouristActivity"
             android:label="@string/title_tourist_activity"
-            android:parentActivityName=".ui.home.HomeActivity">
+            android:parentActivityName="com.workfort.apps.agramoniaapp.ui.home.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.home.HomeActivity" />
+                android:value="com.workfort.apps.agramoniaapp.ui.home.HomeActivity" />
             <intent-filter android:label="@string/filter_view_http_open_agramonia">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -66,46 +67,46 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.farmer.login.LoginActivity"
+            android:name="com.workfort.apps.agramoniaapp.ui.farmer.login.LoginActivity"
             android:label="@string/title_login_activity"
-            android:parentActivityName=".ui.home.HomeActivity">
+            android:parentActivityName="com.workfort.apps.agramoniaapp.ui.home.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.home.HomeActivity" />
+                android:value="com.workfort.apps.agramoniaapp.ui.home.HomeActivity" />
         </activity>
-        <activity android:name=".ui.farmer.registration.RegistrationActivity"
+        <activity android:name="com.workfort.apps.agramoniaapp.ui.farmer.registration.RegistrationActivity"
             android:label="@string/title_registration_activity"
-            android:parentActivityName=".ui.farmer.login.LoginActivity">
+            android:parentActivityName="com.workfort.apps.agramoniaapp.ui.farmer.login.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.farmer.login.LoginActivity" />
+                android:value="com.workfort.apps.agramoniaapp.ui.farmer.login.LoginActivity" />
         </activity>
         <activity
             android:name="com.workfort.apps.util.lib.barcodescanner.SimpleScannerActivity"
             android:label="@string/title_scanner_activity" />
 
         <activity
-            android:name=".ui.farmer.profile.ProfileActivity"
+            android:name="com.workfort.apps.agramoniaapp.ui.farmer.profile.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
-            android:name=".ui.farmer.barcodegenerator.BarcodeGeneratorActivity"
+            android:name="com.workfort.apps.agramoniaapp.ui.farmer.barcodegenerator.BarcodeGeneratorActivity"
             android:label="@string/title_scanner_activity"
-            android:parentActivityName=".ui.farmer.profile.ProfileActivity">
+            android:parentActivityName="com.workfort.apps.agramoniaapp.ui.farmer.profile.ProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.farmer.profile.ProfileActivity" />
+                android:value="com.workfort.apps.agramoniaapp.ui.farmer.profile.ProfileActivity" />
         </activity>
 
         <activity
-            android:name=".ui.farmer.createblog.CreateBlogActivity"
+            android:name="com.workfort.apps.agramoniaapp.ui.farmer.createblog.CreateBlogActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".ui.farmer.profile.ProfileActivity">
+            android:parentActivityName="com.workfort.apps.agramoniaapp.ui.farmer.profile.ProfileActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.home.HomeActivity" />
+                android:value="com.workfort.apps.agramoniaapp.ui.home.HomeActivity" />
         </activity>
     </application>
 

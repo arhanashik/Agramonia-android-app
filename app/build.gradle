@@ -1,10 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion target_sdk
     defaultConfig {
-        applicationId 'com.workfort.apps.agramonia'
+        applicationId 'com.workfort.apps.agramoniaapp'
         minSdkVersion min_sdk
         targetSdkVersion target_sdk
         versionCode version_code
@@ -36,6 +37,8 @@ android {
             outputFileName = new File(newApkName)
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
@@ -46,14 +49,18 @@ dependencies {
     implementation "androidx.exifinterface:exifinterface:$rootProject.exifinterface"
     //instead of support v4
     implementation "androidx.legacy:legacy-support-v4:$rootProject.support"
-    //instead of support design
-    implementation "com.google.android.material:material:$rootProject.material"
     // LiveData + ViewModel
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle"
     implementation "androidx.cardview:cardview:$rootProject.support"
     implementation "androidx.recyclerview:recyclerview:$rootProject.support"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.multidex:multidex:$rootProject.multidex"
+}
+
+//google
+dependencies {
+    //instead of support design
+    implementation "com.google.android.material:material:$rootProject.material"
 }
 
 //3rd party
@@ -88,7 +95,7 @@ dependencies {
 
 //testing libs
 dependencies {
-    testImplementation "junit:junit:$rootProject.junit"
-    androidTestImplementation "androidx.test:runner:$rootProject.runner"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espresso"
+    testImplementation "junit:junit:$rootProject.ext.junit"
+    androidTestImplementation "androidx.test:runner:$rootProject.ext.runner"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.espresso"
 }

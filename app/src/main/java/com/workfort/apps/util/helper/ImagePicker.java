@@ -16,8 +16,8 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.workfort.apps.agramonia.R;
-import com.workfort.apps.agramonia.data.local.constant.Const;
+import com.workfort.apps.agramoniaapp.R;
+import com.workfort.apps.agramoniaapp.data.local.constant.Const;
 
 import java.io.File;
 import java.io.FileNotFoundException;
