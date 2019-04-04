@@ -20,7 +20,7 @@
     <string name="label_logout">Log out</string>
     <string name="label_yes">Ja</string>
     <string name="label_cancel">lösche</string>
-    <string name="label_add_photos">Füge ein Foto hinzu (0/5)</string>
+    <string name="label_add_photos">Füge ein Foto hinzu</string>
     <string name="label_dismiss">Misserfolg</string>
     <string name="label_no_blog">Kein Blog gefunden </string>
     <string name="label_save">Sparen</string>
@@ -80,6 +80,7 @@
     <string name="create_blog_confirmation">Blog erstellen?</string>
     <string name="create_profile_confirmation">Profil erstellen?</string>
 
+    <string name="language">ändern</string>
     <string name="change_language">Sprache ändern</string>
     <string name="select_language">Sprache auswählen</string>
 </resources>

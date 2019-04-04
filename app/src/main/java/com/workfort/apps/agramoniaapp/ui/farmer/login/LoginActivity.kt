@@ -12,6 +12,7 @@ import com.workfort.apps.agramoniaapp.data.local.prefs.PrefsUser
 import com.workfort.apps.agramoniaapp.databinding.ActivityLoginBinding
 import com.workfort.apps.agramoniaapp.ui.farmer.profile.ProfileActivity
 import com.workfort.apps.agramoniaapp.ui.farmer.registration.RegistrationActivity
+import com.workfort.apps.util.helper.ImageLoader
 import com.workfort.apps.util.lib.remote.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -33,6 +34,8 @@ class LoginActivity : AppCompatActivity() {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        ImageLoader.load(this, mBinding.imgAppLogo, R.drawable.img_logo_only_name)
     }
 
     fun onClickLogin(view: View){

@@ -46,7 +46,9 @@
             android:id="@+id/tv_tourist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
             android:paddingStart="20dp"
+            android:paddingRight="0dp"
             android:paddingEnd="0dp"
             android:text="@string/label_tourist"
             android:textSize="18sp"
@@ -94,7 +96,9 @@
             android:id="@+id/tv_farmer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
             android:paddingStart="20dp"
+            android:paddingRight="0dp"
             android:paddingEnd="0dp"
             android:text="@string/label_farmer"
             android:textSize="18sp"
@@ -109,7 +113,7 @@
         <TextView
             android:id="@+id/tv_language"
             style="@style/ActionButton"
-            android:text="@string/change_language"
+            android:text="@string/language"
             android:onClick="onClickChangeLanguage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

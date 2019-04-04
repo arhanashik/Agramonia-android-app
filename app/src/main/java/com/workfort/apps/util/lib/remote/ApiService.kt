@@ -16,7 +16,6 @@ interface ApiService {
     @FormUrlEncoded
     @POST("api/registration")
     fun registration(@Field("name") name: String,
-                     @Field("profile_image") image: String,
                      @Field("location") location: String,
                      @Field("phone") phone: String,
                      @Field("answers_ro") answersRo: String,

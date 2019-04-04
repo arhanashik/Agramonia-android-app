@@ -20,7 +20,7 @@
     <string name="label_logout">Deconectați-vă</string>
     <string name="label_yes">Da</string>
     <string name="label_cancel">Ștergeți</string>
-    <string name="label_add_photos">Adaugă o fotografie (0/5)</string>
+    <string name="label_add_photos">Adaugă o fotografie</string>
     <string name="label_dismiss">Nerespectarea</string>
     <string name="label_no_blog">Nu a fost găsit niciun blog</string>
     <string name="label_save">Salvați</string>
@@ -78,6 +78,7 @@
     <string name="create_blog_confirmation">Creați acest blog?</string>
     <string name="create_profile_confirmation">Creați un profil?</string>
 
+    <string name="language">Limba</string>
     <string name="change_language">Schimbați limba</string>
     <string name="select_language">Selecteaza limba</string>
 </resources>

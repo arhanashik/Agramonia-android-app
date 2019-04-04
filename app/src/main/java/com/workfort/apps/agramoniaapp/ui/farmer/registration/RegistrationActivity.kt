@@ -47,8 +47,6 @@ class RegistrationActivity: AppCompatActivity() {
     private var name: String? = null
     private var location: String? = null
     private var phone: String? = null
-    private var userImgUri: Uri? = null
-    private var userImgUrl: String? = null
     private var userFamilyImages: ArrayList<String> = ArrayList()
 
     private val questions = ArrayList<Question>()
@@ -63,6 +61,8 @@ class RegistrationActivity: AppCompatActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_registration)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        ImageLoader.load(this, mBinding.imgAppLogo, R.drawable.img_logo_only_name)
+
         questions.addAll(Question.prepareQuestions(this))
 
         initRecyclerView(mBinding.rvPhotos)
@@ -76,14 +76,6 @@ class RegistrationActivity: AppCompatActivity() {
 
             if(pickedImageInfo != null && pickedImageInfo.imageUri != null) {
                 when (requestCode) {
-                    Const.RequestCode.PIC_USER_PHOTO -> {
-                        userImgUri = pickedImageInfo.imageUri
-
-                        mBinding.btnChoosePhoto.visibility = View.INVISIBLE
-                        mBinding.imgProfile.visibility = View.VISIBLE
-
-                        ImageLoader.load(this, mBinding.imgProfile, userImgUri.toString())
-                    }
                     Const.RequestCode.PIC_FAMILY_PHOTO -> {
                         (mBinding.rvPhotos.adapter as PhotoAdapter).addItem(
                                 pickedImageInfo.imageUri)
@@ -125,17 +117,6 @@ class RegistrationActivity: AppCompatActivity() {
         }
     }
 
-    fun onClickPickUserImage(view: View) {
-        if (PermissionUtil.on().request(this,
-                        PermissionUtil.REQUEST_CODE_STORAGE,
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-
-            ImagePicker.pickImage(this, Const.RequestCode.PIC_USER_PHOTO)
-        }
-    }
-
     fun onClickPickFamilyImage(view: View) {
         if (PermissionUtil.on().request(this,
                         PermissionUtil.REQUEST_CODE_STORAGE,
@@ -173,11 +154,6 @@ class RegistrationActivity: AppCompatActivity() {
             }
         }
 
-        if(userImgUri == null) {
-            showToast(getString(R.string.image_required_exception))
-            return
-        }
-
         if(mBinding.etLocation.text == null){
             setError(true, getString(R.string.location_required_exception), mBinding.tilLocation)
             return
@@ -207,7 +183,7 @@ class RegistrationActivity: AppCompatActivity() {
         }
 
         if((mBinding.rvPhotos.adapter as PhotoAdapter).itemCount == 0) {
-            showToast("Choose family photo(s)")
+            showToast("Choose at least 1 family photo(s)")
             return
         }
 
@@ -342,58 +318,34 @@ class RegistrationActivity: AppCompatActivity() {
     }
 
     private fun createProfile() {
-        if(!TextUtils.isEmpty(userImgUrl) && userFamilyImages.isNotEmpty()) {
-            doRegistration()
+        val adapter = mBinding.rvPhotos.adapter as PhotoAdapter
+
+        if(adapter.getItems().isEmpty()) {
+            showToast("Please select at least one family image")
             return
         }
-        val userImageMultipartBody = ImageUtil.getMultiPartBody(userImgUri)
 
-        if(userImageMultipartBody != null) {
-            blockUi(true)
+        showToast("Uploading ${ adapter.itemCount} family image(s)...")
+        val multipartBodyParts = ImageUtil
+                .getMultiPartBody(adapter.getItems())
 
-            showToast("Uploading profile image...")
-            disposable = apiService.uploadImage(userImageMultipartBody)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        response ->
-                        showToast(response.message)
+        disposable = apiService.uploadMultipleImage(multipartBodyParts)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    response ->
+                    showToast(response.message + ". Completing registration...")
 
-                        userImgUrl = response.url
-                        val adapter = mBinding.rvPhotos.adapter as PhotoAdapter
-                        showToast("Uploading ${ adapter.itemCount} family image(s)...")
-                        if(adapter.getItems().isNotEmpty()){
-                            val multipartBodyParts = ImageUtil
-                                    .getMultiPartBody(adapter.getItems())
-
-                            disposable = apiService.uploadMultipleImage(multipartBodyParts)
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe({
-                                        response1 ->
-                                        showToast(response1.message + ". Completing registration...")
-
-                                        userFamilyImages.clear()
-                                        userFamilyImages.addAll(response1.urls)
-                                        doRegistration()
-                                    }, {
-                                        error ->
-                                        blockUi(false)
-                                        Timber.e(error)
-                                        showToast(error.message.toString())
-                                        userFamilyImages.clear()
-                                    })
-                        }else {
-                            doRegistration()
-                        }
-                    }, {
-                        error ->
-                        Timber.e(error)
-                        showToast(error.message.toString())
-                        blockUi(false)
-                        userImgUrl = null
-                    })
-        } else showToast("Invalid image. Please select another one")
+                    userFamilyImages.clear()
+                    userFamilyImages.addAll(response.urls)
+                    doRegistration()
+                }, {
+                    error ->
+                    blockUi(false)
+                    Timber.e(error)
+                    showToast(error.message.toString())
+                    userFamilyImages.clear()
+                })
     }
 
     private fun doRegistration() {
@@ -406,7 +358,7 @@ class RegistrationActivity: AppCompatActivity() {
                 Const.LanguageCode.ENGLISH)
         val ansImages = Question.prepareAnsImageJsonStr(questions)
 
-        disposable = apiService.registration(name!!, userImgUrl!!, location!!, phone!!,
+        disposable = apiService.registration(name!!, location!!, phone!!,
                 ansRo, ansDe, ansEn, ansImages, userFamilyImages)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -457,7 +409,6 @@ class RegistrationActivity: AppCompatActivity() {
 
     private fun blockUi(block: Boolean){
         mBinding.tilName.isEnabled = !block
-        mBinding.btnChoosePhoto.isEnabled = !block
         mBinding.tilLocation.isEnabled = !block
         mBinding.tilPhone.isEnabled = !block
         mBinding.btnRegister.isEnabled = !block

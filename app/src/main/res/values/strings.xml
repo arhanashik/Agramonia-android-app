@@ -23,7 +23,7 @@
     <string name="label_logout">Log out</string>
     <string name="label_yes">YES</string>
     <string name="label_cancel">CANCEL</string>
-    <string name="label_add_photos">Add photos (0/5)</string>
+    <string name="label_add_photos">Add photos</string>
     <string name="label_dismiss">Dismiss</string>
     <string name="label_no_blog">No blog found</string>
     <string name="label_save">Save</string>
@@ -85,6 +85,7 @@
     <string name="create_blog_confirmation">Create this blog?</string>
     <string name="create_profile_confirmation">Create profile?</string>
 
+    <string name="language">Language</string>
     <string name="change_language">Change language</string>
     <string name="select_language">Select language</string>
 
