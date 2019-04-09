@@ -9,4 +9,9 @@
         android:id="@+id/action_create_blog"
         android:icon="@drawable/ic_add"
         android:title="@string/label_create_blog"/>
+
+    <item
+        android:id="@+id/action_create_proposal"
+        android:icon="@drawable/ic_add"
+        android:title="@string/label_create_proposal"/>
 </menu>

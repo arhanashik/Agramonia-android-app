@@ -7,25 +7,27 @@ import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.workfort.apps.agramoniaapp.R
 import com.workfort.apps.agramoniaapp.data.local.blog.BlogEntity
 import com.workfort.apps.agramoniaapp.data.local.constant.Const
-import com.workfort.apps.agramoniaapp.data.local.farmer.FarmerEntity
+import com.workfort.apps.agramoniaapp.data.local.farmer.FamilyEntity
 import com.workfort.apps.agramoniaapp.data.local.prefs.PrefsUser
+import com.workfort.apps.agramoniaapp.data.local.productproposal.ProductProposalEntity
+import com.workfort.apps.agramoniaapp.data.local.service.ServiceEntity
 import com.workfort.apps.agramoniaapp.databinding.ActivityProfileBinding
 import com.workfort.apps.agramoniaapp.databinding.AlertDialogBlogDetailsBinding
+import com.workfort.apps.agramoniaapp.databinding.PromptCreateProposalBinding
 import com.workfort.apps.agramoniaapp.databinding.PromptCreateServiceBinding
-import com.workfort.apps.agramoniaapp.ui.base.callback.ItemClickListener
 import com.workfort.apps.agramoniaapp.ui.base.component.BaseActivity
-import com.workfort.apps.agramoniaapp.ui.base.helper.LinearMarginItemDecoration
 import com.workfort.apps.agramoniaapp.ui.farmer.barcodegenerator.BarcodeGeneratorActivity
 import com.workfort.apps.agramoniaapp.ui.farmer.createblog.CreateBlogActivity
+import com.workfort.apps.agramoniaapp.ui.farmer.profile.adapter.SectionAdapter
+import com.workfort.apps.agramoniaapp.ui.farmer.profile.callback.ItemClickEvent
 import com.workfort.apps.util.helper.ImageLoader
-import com.workfort.apps.util.helper.ViewUtils
+import com.workfort.apps.util.helper.Toaster
 import com.workfort.apps.util.lib.remote.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -36,7 +38,8 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
 
     private lateinit var mBinding: ActivityProfileBinding
 
-    private var farmer: FarmerEntity? = null
+    private var mAdapter: SectionAdapter? = null
+    private var family: FamilyEntity? = null
 
     private var disposable: CompositeDisposable = CompositeDisposable()
     private val apiService by lazy {
@@ -59,45 +62,43 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
     }
 
     override fun startUI() {
-        farmer = PrefsUser.farmer
+        family = PrefsUser.family
 
-        if(farmer == null) {
-            showToast("Invalid farmer")
+        if(family == null) {
+            Toaster(this).showToast(R.string.invalid_family)
             finish()
         }
 
-        Timber.d(farmer?.profileImg)
+        Timber.d(family?.profileImg)
 
         mBinding = viewDataBinding as ActivityProfileBinding
         mBinding.fabCreate.setOnClickListener(this)
 
-        mBinding.textViewUserName.text = farmer?.name
-        ImageLoader.load(this, mBinding.imageViewUser, farmer?.profileImg)
+        mBinding.textViewUserName.text = family?.name
+        ImageLoader.load(this, mBinding.imageViewUser, family?.profileImg)
 
-        ViewUtils.initializeRecyclerView(mBinding.recyclerViewBlogs, BlogAdapter(),
-                object : ItemClickListener<BlogEntity> {
-                override fun onItemClick(view: View, item: BlogEntity) {
-                    when (view.id) {
-                        R.id.card_view_container -> {
-                            showDetails(item)
-                        }
-                        else -> {
+        mAdapter = SectionAdapter()
+        mAdapter?.setCallback(object: ItemClickEvent{
+            override fun onClickService(service: ServiceEntity, position: Int) {
 
-                        }
-                    }
-                }
-            },
-            null,
-            LinearLayoutManager(this),
-            LinearMarginItemDecoration(ViewUtils.getPixel(R.dimen.margin_8)),
-            DefaultItemAnimator()
-        )
+            }
 
+            override fun onClickProposal(proposal: ProductProposalEntity, position: Int) {
+
+            }
+
+            override fun onClickBlog(blog: BlogEntity, position: Int) {
+                showBlogDetails(blog)
+            }
+        })
+
+        mBinding.recyclerViewBlogs.layoutManager = LinearLayoutManager(this)
+        mBinding.recyclerViewBlogs.itemAnimator = DefaultItemAnimator()
+        mBinding.recyclerViewBlogs.adapter = mAdapter
+
+        loadServiceList()
+        loadProposalList()
         loadBlogList()
-    }
-
-    private fun getAdapter(): BlogAdapter {
-        return mBinding.recyclerViewBlogs.adapter as BlogAdapter
     }
 
     override fun stopUI() {
@@ -126,8 +127,11 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
                 }
                 R.id.action_create_blog -> {
                     val intent = Intent(this, CreateBlogActivity::class.java)
-                    intent.putExtra(Const.Key.FARMER_ID, farmer?.id)
+                    intent.putExtra(Const.Key.FARMER_ID, family?.id)
                     startActivityForResult(intent, Const.RequestCode.CREATE_BLOG)
+                }
+                R.id.action_create_proposal -> {
+                    showCreateProposalDialog()
                 }
             }
             true
@@ -153,20 +157,71 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
             if(TextUtils.isEmpty(title) || TextUtils.isEmpty(price)) return@setOnClickListener
 
             binding.btnSave.isEnabled = false
-            disposable.add(apiService.createService(title, price.toInt(), farmer?.id!!)
+            binding.pb.visibility = View.VISIBLE
+            disposable.add(apiService.saveService(title, title, title, price.toInt(), family?.id!!)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         binding.pb.visibility = View.INVISIBLE
                         binding.btnSave.isEnabled = true
-                        showToast(it.message)
+                        Toaster(this).showToast(it.message)
 
-                        if(it.success) dialog.dismiss()
+                        if(it.success) {
+                            dialog.dismiss()
+                            mAdapter?.addService(it.service!!)
+                        }
                     }, {
                         Timber.e(it)
                         binding.pb.visibility = View.INVISIBLE
                         binding.btnSave.isEnabled = true
-                        showToast(it.message.toString())
+                        Toaster(this).showToast(R.string.unknown_exception)
+                    })
+            )
+        }
+
+        dialog.show()
+    }
+
+    private fun showCreateProposalDialog() {
+        val binding = DataBindingUtil.inflate<PromptCreateProposalBinding>(
+                layoutInflater, R.layout.prompt_create_proposal, null, false
+        )
+
+        val dialog = AlertDialog.Builder(this)
+                .setTitle(R.string.label_create_proposal)
+                .setView(binding.root)
+                .create()
+
+        binding.btnSave.setOnClickListener {
+            val title = binding.etTitle.text.toString()
+            val description = binding.etDescription.text.toString()
+            val price = binding.etPrice.text.toString()
+
+            if(TextUtils.isEmpty(title)
+                    || TextUtils.isEmpty(description)
+                    || TextUtils.isEmpty(price)) return@setOnClickListener
+
+            binding.btnSave.isEnabled = false
+            binding.pb.visibility = View.VISIBLE
+            disposable.add(apiService.saveProposal(title, title, title,
+                    description, description, description, price.toInt(),
+                    family?.phone.toString(), "[]", family?.id!!)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        binding.pb.visibility = View.INVISIBLE
+                        binding.btnSave.isEnabled = true
+                        Toaster(this).showToast(it.message)
+
+                        if(it.success) {
+                            dialog.dismiss()
+                            mAdapter?.addProductProposal(it.proposal!!)
+                        }
+                    }, {
+                        Timber.e(it)
+                        binding.pb.visibility = View.INVISIBLE
+                        binding.btnSave.isEnabled = true
+                        Toaster(this).showToast(R.string.unknown_exception)
                     })
             )
         }
@@ -212,12 +267,66 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    private fun loadServiceList(){
+        mBinding.pb.visibility = View.VISIBLE
+        mBinding.textViewNoData.visibility = View.INVISIBLE
+        mBinding.recyclerViewBlogs.visibility = View.INVISIBLE
+
+        disposable.add(apiService.getServiceList(family!!.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    response ->
+                    mBinding.pb.visibility = View.INVISIBLE
+                    if(response.services.isNullOrEmpty()) {
+                        mBinding.textViewNoData.visibility = View.VISIBLE
+                    }else {
+                        mBinding.recyclerViewBlogs.visibility = View.VISIBLE
+                        mAdapter?.setServices(response.services)
+                    }
+                }, {
+                    error ->
+                    Timber.e(error)
+                    mBinding.pb.visibility = View.INVISIBLE
+                    mBinding.textViewNoData.visibility = View.VISIBLE
+                    Toaster(this).showToast(R.string.unknown_exception)
+                })
+        )
+    }
+
+    private fun loadProposalList(){
+        mBinding.pb.visibility = View.VISIBLE
+        mBinding.textViewNoData.visibility = View.INVISIBLE
+        mBinding.recyclerViewBlogs.visibility = View.INVISIBLE
+
+        disposable.add(apiService.getProposalList(family!!.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    response ->
+                    mBinding.pb.visibility = View.INVISIBLE
+                    if(response.proposals.isNullOrEmpty()) {
+                        mBinding.textViewNoData.visibility = View.VISIBLE
+                    }else {
+                        mBinding.recyclerViewBlogs.visibility = View.VISIBLE
+                        mAdapter?.setProductProposals(response.proposals)
+                    }
+                }, {
+                    error ->
+                    Timber.e(error)
+                    mBinding.pb.visibility = View.INVISIBLE
+                    mBinding.textViewNoData.visibility = View.VISIBLE
+                    Toaster(this).showToast(R.string.unknown_exception)
+                })
+        )
+    }
+
     private fun loadBlogList(){
         mBinding.pb.visibility = View.VISIBLE
         mBinding.textViewNoData.visibility = View.INVISIBLE
         mBinding.recyclerViewBlogs.visibility = View.INVISIBLE
 
-        disposable.add(apiService.getBlogList(farmer!!.id)
+        disposable.add(apiService.getBlogList(family!!.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -225,7 +334,7 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
                     mBinding.pb.visibility = View.INVISIBLE
                     if(response.isNotEmpty()) {
                         mBinding.recyclerViewBlogs.visibility = View.VISIBLE
-                        getAdapter().addItems(response)
+                        mAdapter?.setBlogs(ArrayList(response))
                     }
                     else mBinding.textViewNoData.visibility = View.VISIBLE
                 }, {
@@ -233,12 +342,12 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
                     Timber.e(error)
                     mBinding.pb.visibility = View.INVISIBLE
                     mBinding.textViewNoData.visibility = View.VISIBLE
-                    showToast(error.message.toString())
+                    Toaster(this).showToast(R.string.unknown_exception)
                 })
         )
     }
 
-    private fun showDetails(item: BlogEntity) {
+    private fun showBlogDetails(item: BlogEntity) {
         val builder = AlertDialog.Builder(this)
         val dialogBinding = AlertDialogBlogDetailsBinding.inflate(layoutInflater)
 
@@ -255,10 +364,6 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
         dialogBinding.textViewDismiss.setOnClickListener {
             dialog.dismiss()
         }
-    }
-
-    private fun showToast(message: String){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

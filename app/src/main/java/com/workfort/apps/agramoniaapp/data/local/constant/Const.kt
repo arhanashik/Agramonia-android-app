@@ -31,7 +31,7 @@ object Const {
     }
 
     object Key {
-        const val FARMER = "farmer"
+        const val FARMER = "family"
         const val FARMER_ID = "farmer_id"
         const val BLOG = "blog"
     }

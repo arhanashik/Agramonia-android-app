@@ -34,20 +34,20 @@
     <string name="hint_location">Your Location</string>
     <string name="hint_phone">Your Phone Number</string>
     <string name="hint_answer1">
-        1.	Do you have animals? Can you show them to us?
+        1.	Does your family have animals? What animals do you have?
     </string>
     <string name="hint_answer2">
-        2.	Do you like your animals? Which one is your favourite? Why?
+        2.	Do you like your animals? Which one is preferred? Why?
     </string>
     <string name="hint_answer3">
-        3.	Can you show us some pictures of your Home? What do you produce at home?
-        Where you have learned all this?
+        3.	Can you show us some pictures of your house? what are you producing at home?
+        Where did you learn all this?
     </string>
     <string name="hint_answer4">
-        4.	Would you like to say anything to the people living in big cities?
+        4.	Are you satisfied with the prices you get for your products?
     </string>
     <string name="hint_answer5">
-        5.	What is your hope for the future?
+        5.	What do you wish for the future of your children?
     </string>
     <string name="hint_title">Please type a title</string>
     <string name="hint_description">Please type a proper description</string>
@@ -71,7 +71,7 @@
     <string name="email_required_exception">Email required</string>
     <string name="password_required_exception">Password required</string>
     <string name="name_required_exception">Name required</string>
-    <string name="image_required_exception">Image required</string>
+    <string name="image_required_exception">Please choose image(s)</string>
     <string name="location_required_exception">Location required</string>
     <string name="phone_required_exception">Phone number required</string>
     <string name="answer_required_exception">Answer required</string>
@@ -90,26 +90,20 @@
     <string name="select_language">Select language</string>
 
     <string name="question_1_en" translatable="false">
-        <!--How many people are in your family and what are their dreams and aspirations?-->
-        1.	Do you have animals? Can you show them to us?
+        1.	Does your family have animals? What animals do you have?
     </string>
     <string name="question_2_en" translatable="false">
-        <!--If given the possibility, would you host a dinner for one of the customers who bought-->
-        <!--your products?-->
-        2.	Do you like your animals? Which one is your favourite? Why?
+        2.	Do you like your animals? Which one is preferred? Why?
     </string>
     <string name="question_3_en" translatable="false">
-        <!--Would you consider industrialization of the farming process is a good thing? Why?-->
-        3.	Can you show us some pictures of your Home? What do you produce at home?
-        Where you have learned all this?
+        3.	Can you show us some pictures of your house? what are you producing at home?
+        Where did you learn all this?
     </string>
     <string name="question_4_en" translatable="false">
-        <!--How do you feel knowing your marmalade is being sold abroad?-->
-        4.	Would you like to say anything to the people living in big cities?
+        4.	Are you satisfied with the prices you get for your products?
     </string>
     <string name="question_5_en" translatable="false">
-        <!--Would you like to say anything to the people living in big cities?-->
-        5.	What is your hope for the future?
+        5.	What do you wish for the future of your children?
     </string>
 
     <string name="question_1_de" translatable="false">
@@ -150,6 +144,11 @@
     <string name="label_add_answer_photos">Add Photo</string>
     <string name="question_save_message">Save the information?</string>
     <string name="unknown_exception">Ops! Please try again.</string>
+    <string name="label_services">Services</string>
     <string name="label_create_service">Create Service</string>
     <string name="hint_price">Please type a price</string>
+    <string name="max_photo_added">Cannot add more than 3 photos</string>
+    <string name="label_create_proposal">Create Proposal</string>
+    <string name="label_blogs">Blogs</string>
+    <string name="invalid_family">Invalid family</string>
 </resources>

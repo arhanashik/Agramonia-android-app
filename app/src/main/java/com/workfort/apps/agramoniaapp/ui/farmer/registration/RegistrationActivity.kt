@@ -50,7 +50,7 @@ class RegistrationActivity: AppCompatActivity() {
     private var userFamilyImages: ArrayList<String> = ArrayList()
 
     private val questions = ArrayList<Question>()
-    private val totalQuestion = 5
+    private var totalQuestion = 0
     private var answeredQuestionCount = 0
 
     private var photoAdapter = PhotoAdapter()
@@ -64,6 +64,7 @@ class RegistrationActivity: AppCompatActivity() {
         ImageLoader.load(this, mBinding.imgAppLogo, R.drawable.img_logo_only_name)
 
         questions.addAll(Question.prepareQuestions(this))
+        totalQuestion = questions.size
 
         initRecyclerView(mBinding.rvPhotos)
     }
@@ -206,7 +207,7 @@ class RegistrationActivity: AppCompatActivity() {
 
             binding.btnAddPhoto.setOnClickListener {
                 if(photoAdapter.itemCount == 3) {
-                    showToast("Cannot add more than 3 photos")
+                    Toaster(this).showToast(R.string.max_photo_added)
                 } else onClickPickAnswerImage()
             }
         }
@@ -232,9 +233,10 @@ class RegistrationActivity: AppCompatActivity() {
                     if(questions[answeredQuestionCount].hasImage) {
                         if(photoAdapter.itemCount == 0) {
                             shouldSave = false
-                            showToast("Please choose image(s)")
+                            Toaster(this).showToast(R.string.image_required_exception)
                         }
                     }
+
                     if(shouldSave) saveAnsConfirmation(answer, binding.pb, ansDialog)
                 }
             }
@@ -359,7 +361,7 @@ class RegistrationActivity: AppCompatActivity() {
         val ansImages = Question.prepareAnsImageJsonStr(questions)
 
         disposable = apiService.registration(name!!, location!!, phone!!,
-                ansRo, ansDe, ansEn, ansImages, userFamilyImages)
+                userFamilyImages[0], ansRo, ansDe, ansEn, ansImages, userFamilyImages)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -367,7 +369,7 @@ class RegistrationActivity: AppCompatActivity() {
                     showToast(response.message)
                     blockUi(false)
                     if(response.success) {
-                        PrefsUser.farmer = response.farmer
+                        PrefsUser.family = response.family
                         PrefsUser.session = true
 
                         startActivity(Intent(this, ProfileActivity::class.java))

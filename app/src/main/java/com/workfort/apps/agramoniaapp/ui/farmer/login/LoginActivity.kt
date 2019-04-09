@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
                     showToast(response.message)
                     blockUi(false)
                     if(response.success) {
-                        PrefsUser.farmer = response.farmer
+                        PrefsUser.family = response.family
                         PrefsUser.session = true
 
                         startActivity(Intent(this, ProfileActivity::class.java))

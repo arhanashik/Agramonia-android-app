@@ -56,7 +56,7 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
     override fun startUI() {
         farmerId = intent.getIntExtra(Const.Key.FARMER_ID, -1)
         if(farmerId == -1) {
-            showToast("Invalid farmer id")
+            showToast("Invalid family id")
             finish()
         }
 

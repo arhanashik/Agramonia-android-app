@@ -3,7 +3,7 @@ package com.workfort.apps.agramoniaapp.data.local.prefs
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.workfort.apps.agramoniaapp.data.local.farmer.FarmerEntity
+import com.workfort.apps.agramoniaapp.data.local.farmer.FamilyEntity
 
 
 object PrefsUser : PrefProp {
@@ -19,10 +19,10 @@ object PrefsUser : PrefProp {
         editor.apply()
     }
 
-    var farmer: FarmerEntity?
+    var family: FamilyEntity?
         get() {
             val farmerJson = prefs.getString(keyFarmerEntity, "")
-            return Gson().fromJson(farmerJson, FarmerEntity::class.java)?: return null
+            return Gson().fromJson(farmerJson, FamilyEntity::class.java)?: return null
         }
         set(value) = prefs.edit { it.putString(keyFarmerEntity, Gson().toJson(value)) }
 

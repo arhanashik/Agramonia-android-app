@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-data class FarmerEntity(val id: Int,
+data class FamilyEntity(val id: Int,
                         val name: String?,
                         val location: String?,
                         @SerializedName("profile_image") val profileImg: String?,
@@ -29,12 +29,12 @@ data class FarmerEntity(val id: Int,
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<FarmerEntity> {
-        override fun createFromParcel(parcel: Parcel): FarmerEntity {
-            return FarmerEntity(parcel)
+    companion object CREATOR : Parcelable.Creator<FamilyEntity> {
+        override fun createFromParcel(parcel: Parcel): FamilyEntity {
+            return FamilyEntity(parcel)
         }
 
-        override fun newArray(size: Int): Array<FarmerEntity?> {
+        override fun newArray(size: Int): Array<FamilyEntity?> {
             return arrayOfNulls(size)
         }
     }

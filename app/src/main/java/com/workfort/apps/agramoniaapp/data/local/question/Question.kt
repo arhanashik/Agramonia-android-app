@@ -29,7 +29,7 @@ data class Question(val sl: Int,
                     2,
                     context.getString(R.string.hint_answer2),
                     "",
-                    false,
+                    true,
                     ArrayList())
             questions.add(question)
 
@@ -103,17 +103,15 @@ data class Question(val sl: Int,
         fun prepareAnsImageJsonStr(questions: ArrayList<Question>): String{
             val answersImageJson = JSONArray()
 
-            var i = 0
-            questions.forEach {
+            questions.forEach { question ->
                 val answerImageJson = JSONArray()
-                if(it.hasImage && it.images.isNotEmpty()) {
-                    it.images.forEach {
-                        image -> answerImageJson.put(image)
+                if(question.hasImage && question.images.isNotEmpty()) {
+                    question.images.forEach { image ->
+                        answerImageJson.put(image)
                     }
                 }
 
-                answersImageJson.put(i, answerImageJson)
-                i++
+                answersImageJson.put(answerImageJson)
             }
 
             return answersImageJson.toString()

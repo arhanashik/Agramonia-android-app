@@ -1,7 +1,9 @@
 package com.workfort.apps.agramoniaapp.ui.splash;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -47,12 +49,12 @@ public class SplashActivity extends AppCompatActivity {
         mBinding.imgAppLogo.setAnimation(leftIn);
         mBinding.imgAppName.setAnimation(rightIn);
 
-        if (PrefsGlobal.INSTANCE.getFirstRun()) {
-            PrefsGlobal.INSTANCE.setFirstRun(false);
-            PrefsGlobal.INSTANCE.setSelectedLanguageCode(Const.LanguageCode.ROMANIAN);
+//        if (PrefsGlobal.INSTANCE.getFirstRun()) {
+//            PrefsGlobal.INSTANCE.setFirstRun(false);
+//            PrefsGlobal.INSTANCE.setSelectedLanguageCode(Const.LanguageCode.ROMANIAN);
             setLanguage();
-            return;
-        }
+//            return;
+//        }
 
         new Handler().postDelayed(() -> {
             startActivity(new Intent(this, HomeActivity.class));
@@ -61,7 +63,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void setLanguage() {
-        Locale locale = new Locale(PrefsGlobal.INSTANCE.getSelectedLanguageCode());
+        String lang = PrefsGlobal.INSTANCE.getSelectedLanguageCode();
+
+        if(getLocale(this).getLanguage().equals(lang)) return;
+
+        Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
@@ -70,5 +76,13 @@ public class SplashActivity extends AppCompatActivity {
 
         finishAffinity();
         startActivity(new Intent(this, SplashActivity.class));
+    }
+
+    private Locale getLocale(Context context){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            return context.getResources().getConfiguration().getLocales().get(0);
+        } else{
+            return context.getResources().getConfiguration().locale;
+        }
     }
 }
