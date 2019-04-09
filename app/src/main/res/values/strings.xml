@@ -59,7 +59,7 @@
     <string name="description_ic_camera" translatable="false">Icon camera</string>
 
     <string name="default_web_address" translatable="false">www.agramonia.com</string>
-    <string name="path_to_farmer_profile" translatable="false">/farmer/</string>
+    <string name="path_to_family_profile" translatable="false">/family/</string>
 
     <!-- exceptions -->
     <string name="invalid_qr_code_exception">Oops! Invalid QR code.</string>

@@ -2,6 +2,7 @@ package com.workfort.apps.agramoniaapp.ui.tourist;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -12,16 +13,20 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.workfort.apps.agramoniaapp.R;
+import com.workfort.apps.agramoniaapp.databinding.ActivityTouristBinding;
 import com.workfort.apps.util.lib.barcodescanner.SimpleScannerActivity;
 
 import java.util.Objects;
 
 public class TouristActivity extends AppCompatActivity {
 
+    private ActivityTouristBinding mBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tourist);
+
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_tourist);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
@@ -37,7 +42,10 @@ public class TouristActivity extends AppCompatActivity {
 
             if(resultCode == RESULT_OK && data != null){
                 String scannedText = data.getStringExtra(SimpleScannerActivity.KEY_SCANNED_TEXT);
-                //String scannedFormat = data.getStringExtra(SimpleScannerActivity.KEY_SCANNED_FORMAT);
+                String scannedFormat = data.getStringExtra(SimpleScannerActivity.KEY_SCANNED_FORMAT);
+
+                String dataStr = "Format: " + scannedFormat + "\nData: " + scannedText;
+                mBinding.tvScannedData.setText(dataStr);
 
                 if(!TextUtils.isEmpty(scannedText)
                         && scannedText.contains(getString(R.string.default_web_address))){

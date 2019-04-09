@@ -24,7 +24,7 @@ class BarcodeGeneratorActivity: AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val text= "http://${getString(R.string.default_web_address)}" +
-                "${getString(R.string.path_to_farmer_profile)}${PrefsUser.family?.id}"
+                "${getString(R.string.path_to_family_profile)}${PrefsUser.family?.id}"
         val multiFormatWriter = MultiFormatWriter()
 
         mBinding.tvBarcode.text = text
