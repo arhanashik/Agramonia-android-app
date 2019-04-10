@@ -211,8 +211,11 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
                 }
             }
 
+            val prefix = RequestBody.create(
+                    MediaType.parse("text/plain"), Const.Prefix.BLOG
+            )
             showToast("Uploading ${multipartBodyParts.size} images...")
-            disposable = apiService.uploadMultipleImage(multipartBodyParts)
+            disposable = apiService.uploadMultipleImage(prefix, multipartBodyParts)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

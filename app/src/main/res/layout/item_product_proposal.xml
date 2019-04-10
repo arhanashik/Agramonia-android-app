@@ -45,6 +45,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_view_title"
                 tools:text="hello description" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_photos"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="12dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/divider" />
+
             <View
                 android:id="@+id/divider"
                 android:layout_width="0dp"
@@ -52,7 +63,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@android:color/darker_gray"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_description"
+                app:layout_constraintTop_toBottomOf="@+id/rv_photos"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 

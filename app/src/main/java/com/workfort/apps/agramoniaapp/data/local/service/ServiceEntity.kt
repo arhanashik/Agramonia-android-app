@@ -6,4 +6,5 @@ data class ServiceEntity (val id: Int,
                           @SerializedName("title_en") val titleEn: String,
                           @SerializedName("title_de") val titleDe: String,
                           @SerializedName("title_rm") val titleRm: String,
-                          val price: Int)
+                          val price: Int,
+                          val image: String?)

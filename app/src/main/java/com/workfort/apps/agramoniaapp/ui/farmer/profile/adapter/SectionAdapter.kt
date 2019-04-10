@@ -6,6 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.workfort.apps.agramoniaapp.R
 import com.workfort.apps.agramoniaapp.data.local.blog.BlogEntity
+import com.workfort.apps.agramoniaapp.data.local.constant.Const
+import com.workfort.apps.agramoniaapp.data.local.prefs.PrefsGlobal
 import com.workfort.apps.agramoniaapp.data.local.productproposal.ProductProposalEntity
 import com.workfort.apps.agramoniaapp.data.local.service.ServiceEntity
 import com.workfort.apps.agramoniaapp.ui.farmer.profile.callback.ItemClickEvent
@@ -19,6 +21,11 @@ class SectionAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val mServices = ArrayList<ServiceEntity>()
     private val mProductProposals = ArrayList<ProductProposalEntity>()
     private val mBolgs = ArrayList<BlogEntity>()
+    private var mLang = Const.Language.ROMANIAN
+
+    init {
+        mLang = PrefsGlobal.selectedLanguageCode!!
+    }
 
     private var mCallback: ItemClickEvent? = null
 
@@ -134,15 +141,17 @@ class SectionAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         if(position in 1..(header2 - 1) ) {
-            (holder as ServiceViewHolder).bind(mServices[position - 1], mCallback)
+            (holder as ServiceViewHolder).bind(mLang, mServices[position - 1], mCallback)
             return
         }
 
         if(position in (header2 + 1)..(header3 - 1) ) {
-            (holder as ProductProposalViewHolder).bind(mProductProposals[position - header2 - 1], mCallback)
+            (holder as ProductProposalViewHolder).bind(
+                    mLang, mProductProposals[position - header2 - 1], mCallback
+            )
             return
         }
 
-        (holder as BlogViewHolder).bind(mBolgs[position - header3 - 1], mCallback)
+        (holder as BlogViewHolder).bind(mLang, mBolgs[position - header3 - 1], mCallback)
     }
 }

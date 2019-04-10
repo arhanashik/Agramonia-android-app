@@ -32,6 +32,8 @@ import com.workfort.apps.util.lib.remote.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import timber.log.Timber
 
 class RegistrationActivity: AppCompatActivity() {
@@ -280,7 +282,10 @@ class RegistrationActivity: AppCompatActivity() {
         val multipartBodyParts = ImageUtil.getMultiPartBody(
                 photoAdapter.getItems())
 
-        disposable = apiService.uploadMultipleImage(multipartBodyParts)
+        val prefix = RequestBody.create(
+                MediaType.parse("text/plain"), Const.Prefix.QA
+        )
+        disposable = apiService.uploadMultipleImage(prefix, multipartBodyParts)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -331,7 +336,10 @@ class RegistrationActivity: AppCompatActivity() {
         val multipartBodyParts = ImageUtil
                 .getMultiPartBody(adapter.getItems())
 
-        disposable = apiService.uploadMultipleImage(multipartBodyParts)
+        val prefix = RequestBody.create(
+                MediaType.parse("text/plain"), Const.Prefix.FAMILY
+        )
+        disposable = apiService.uploadMultipleImage(prefix, multipartBodyParts)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

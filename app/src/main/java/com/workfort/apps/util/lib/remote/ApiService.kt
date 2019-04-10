@@ -6,6 +6,7 @@ import com.workfort.apps.agramoniaapp.data.remote.response.*
 import io.reactivex.Observable
 import retrofit2.http.*
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.POST
 import retrofit2.http.Multipart
 
@@ -33,7 +34,8 @@ interface ApiService {
 
     @Multipart
     @POST("uploader/Api.php?call=multiple_upload")
-    fun uploadMultipleImage(@Part files: List<MultipartBody.Part>):
+    fun uploadMultipleImage(@Part("prefix") prefix: RequestBody,
+                            @Part files: List<MultipartBody.Part>):
             Observable<MultipleImageUploadResponse>
 
     @GET("api/blog-list")

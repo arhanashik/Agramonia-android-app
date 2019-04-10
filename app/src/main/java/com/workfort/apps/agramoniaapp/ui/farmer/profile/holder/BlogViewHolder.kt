@@ -7,7 +7,7 @@ import com.workfort.apps.agramoniaapp.ui.farmer.profile.callback.ItemClickEvent
 
 class BlogViewHolder(private val binding: ItemBlogBinding): RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(blog: BlogEntity, callback: ItemClickEvent?) {
+    fun bind(lang: String, blog: BlogEntity, callback: ItemClickEvent?) {
         binding.textViewTitle.text = blog.title
         binding.textViewDescription.text = blog.description
 

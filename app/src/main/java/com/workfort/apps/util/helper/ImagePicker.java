@@ -345,13 +345,13 @@ public class ImagePicker {
 
     private static File getTempFileForImage(Context context) {
         Long timeStamp = System.currentTimeMillis();
-        String imageName = Const.PREFIX_IMAGE + timeStamp.toString();
+        String imageName = Const.Prefix.IMAGE + timeStamp.toString();
         return getTempFile(context, imageName, false);
     }
 
     private static File getEmptyTempFileForImage(Context context) {
         Long timeStamp = System.currentTimeMillis();
-        String imageName = Const.PREFIX_IMAGE + timeStamp.toString();
+        String imageName = Const.Prefix.IMAGE + timeStamp.toString();
         return getTempFile(context, imageName, true);
     }
 
