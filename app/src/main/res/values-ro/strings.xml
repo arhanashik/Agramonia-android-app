@@ -31,20 +31,20 @@
     <string name="hint_location">Locul tău</string>
     <string name="hint_phone">Numărul dvs. de telefon</string>
     <string name="hint_answer1">
-        Cați membri are familia dvs si care sunt visurile si aspirațiile lor?
+        Hat deine Familie Tiere? Welche Tiere habt ihr?
     </string>
     <string name="hint_answer2">
-        Daca ati avea posibilitatea, ati invita unul din clientii ce v-au cumparat produsul
-        a o cina?
+        Mögt ihr eure Tiere ? Welches ist euer Lieblingstier? Warum?
     </string>
     <string name="hint_answer3">
-        Considerati ca industrializarea agriculturii este un lucru bun? De ce?
+        Kannst du uns ein Bild von deinem Zuhause zeigen? Was stellst du daheim her?
+        Wo hast du alldieses gelernt?
     </string>
     <string name="hint_answer4">
-        Ce parere aveti de faptul ca produsele dvs sunt vandute in strainatate?
+        Seid ihr mit den Preisen für eure Produkte zufrieden?
     </string>
     <string name="hint_answer5">
-        Ati dori sa le transmiteti ceva oamenilor ce locuiesc in marile orase?
+        Was wünschen Sie für die Zukunft ihrer Kinder?
     </string>
     <string name="hint_title">Vă rugăm să furnizați un titlu</string>
     <string name="hint_description">Vă rugăm să oferiți o descriere adecvată</string>
@@ -81,4 +81,15 @@
     <string name="language">Limba</string>
     <string name="change_language">Schimbați limba</string>
     <string name="select_language">Selecteaza limba</string>
+
+    <string name="label_add_answer_photos">Adauga poza</string>
+    <string name="question_save_message">Salvați informațiile?</string>
+    <string name="unknown_exception">Ops! Vă rugăm să încercați din nou.</string>
+    <string name="label_services">Servicii</string>
+    <string name="label_create_service">Creați un serviciu</string>
+    <string name="hint_price">Introduceți un preț</string>
+    <string name="max_photo_added">Nu se pot adăuga mai mult de 3 fotografii</string>
+    <string name="label_create_proposal">Creați o ofertă</string>
+    <string name="label_blogs">bloguri</string>
+    <string name="invalid_family">Familie nevalidă</string>
 </resources>

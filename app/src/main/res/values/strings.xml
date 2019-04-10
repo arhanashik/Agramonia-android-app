@@ -107,39 +107,36 @@
     </string>
 
     <string name="question_1_de" translatable="false">
-        Wie viele Mitglieder hat deine Familie? Von was träumen diese und was sind ihre
-        Bestrebungen?
+        Familia ta are animale? Ce animale aveți?
     </string>
     <string name="question_2_de" translatable="false">
-        Wenn Sie die Möglichkeit hätten, würden Sie gerne die Kunden eines Ihrer Produkte zum
-        Abendessen laden?
+        Îți plac animalele tale? Care dintre ele este preferată? Dece?
     </string>
     <string name="question_3_de" translatable="false">
-        Würden sie die Industrialisierung der Landwirtschaft insgesamt als eine eher positive,
-        oder eher negative Tendenz beschreiben? Wieso?
+        Poți să ne arăți niște poze ale Casei tale? ce faci acasă? Unde ați învățat toate acestea
     </string>
     <string name="question_4_de" translatable="false">
-        Wie fühlt es sich an zu wissen, dass ihre Marmelade in anderen Ländern verkauft wird?
+        Sunteți mulțumit de prețurile produselor dvs.?
     </string>
     <string name="question_5_de" translatable="false">
-        Was wollen Sie zu den Menschen sagen, die in Großstädten Leben?
+        Ce vreți în viitor pe copiii voștri?
     </string>
 
     <string name="question_1_ro" translatable="false">
-        Cați membri are familia dvs si care sunt visurile si aspirațiile lor?
+        Hat deine Familie Tiere? Welche Tiere habt ihr?
     </string>
     <string name="question_2_ro" translatable="false">
-        Daca ati avea posibilitatea, ati invita unul din clientii ce v-au cumparat produsul
-        a o cina?
+        Mögt ihr eure Tiere ? Welches ist euer Lieblingstier? Warum?
     </string>
     <string name="question_3_ro" translatable="false">
-        Considerati ca industrializarea agriculturii este un lucru bun? De ce?
+        Kannst du uns ein Bild von deinem Zuhause zeigen? Was stellst du daheim her? Wo hast du
+        alldieses gelernt?
     </string>
     <string name="question_4_ro" translatable="false">
-        Ce parere aveti de faptul ca produsele dvs sunt vandute in strainatate?
+        Seid ihr mit den Preisen für eure Produkte zufrieden?
     </string>
     <string name="question_5_ro" translatable="false">
-        Ati dori sa le transmiteti ceva oamenilor ce locuiesc in marile orase?
+        Was wünschen Sie für die Zukunft ihrer Kinder?
     </string>
     <string name="label_add_answer_photos">Add Photo</string>
     <string name="question_save_message">Save the information?</string>
