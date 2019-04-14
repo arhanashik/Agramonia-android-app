@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
         ActivityHomeBinding mBinding = DataBindingUtil.setContentView(this,
                 R.layout.activity_home);
 
-        ImageLoader.load(this, mBinding.imgAppLogo, R.drawable.img_logo_only_name);
+        ImageLoader.load(mBinding.imgAppLogo, R.drawable.img_logo_only_name);
 
         for (int id : mBinding.groupTourist.getReferencedIds()) {
             findViewById(id).setOnClickListener(view ->

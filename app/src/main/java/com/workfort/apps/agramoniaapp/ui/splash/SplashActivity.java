@@ -36,8 +36,8 @@ public class SplashActivity extends AppCompatActivity {
         ActivitySplashBinding mBinding = DataBindingUtil.setContentView(this,
                 R.layout.activity_splash);
 
-        ImageLoader.load(this, mBinding.imgAppLogo, R.mipmap.ic_launcher);
-        ImageLoader.load(this, mBinding.imgAppName, R.drawable.img_logo_only_name);
+        ImageLoader.load(mBinding.imgAppLogo, R.mipmap.ic_launcher);
+        ImageLoader.load(mBinding.imgAppName, R.drawable.img_logo_only_name);
 
         long animStartTime = AnimationUtils.currentAnimationTimeMillis() + 10;
         Animation leftIn = AnimationUtils.loadAnimation(this, R.anim.left_in);

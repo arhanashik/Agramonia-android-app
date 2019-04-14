@@ -16,10 +16,6 @@ import com.workfort.apps.agramoniaapp.data.local.constant.Const
 import com.workfort.apps.agramoniaapp.ui.base.callback.ItemClickListener
 import com.workfort.apps.agramoniaapp.ui.base.component.BaseActivity
 import com.workfort.apps.agramoniaapp.ui.base.helper.LinearHorizontalMarginItemDecoration
-import com.workfort.apps.util.helper.ImagePicker
-import com.workfort.apps.util.helper.ImageUtil
-import com.workfort.apps.util.helper.PermissionUtil
-import com.workfort.apps.util.helper.ViewUtils
 import com.workfort.apps.util.lib.remote.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -31,6 +27,7 @@ import timber.log.Timber
 import java.io.File
 
 import com.workfort.apps.agramoniaapp.databinding.ActivityCreateBlogBinding
+import com.workfort.apps.util.helper.*
 
 class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>() {
     private lateinit var mBinding: ActivityCreateBlogBinding
@@ -195,32 +192,22 @@ class CreateBlogActivity : BaseActivity<CreateBlogMvpView, CreateBlogPresenter>(
 
         val uriList = getAdapter().getItems()
         if(uriList.size > 0){
-            val multipartBodyParts = ArrayList<MultipartBody.Part>()
-            var i = 0
-            uriList.forEach {
-                val path = ImageUtil.getPath(this, it)
-                val mediaTypeStr = contentResolver.getType(it)
-
-                if (mediaTypeStr != null) {
-                    val mediaType = MediaType.parse(mediaTypeStr)
-                    val requestBody = RequestBody.create(mediaType, File(path))
-                    val multipartBody = MultipartBody.Part.createFormData("files[$i]",
-                            path, requestBody)
-                    multipartBodyParts.add(multipartBody)
-                    i++
-                }
-            }
-
             val prefix = RequestBody.create(
                     MediaType.parse("text/plain"), Const.Prefix.BLOG
             )
-            showToast("Uploading ${multipartBodyParts.size} images...")
+            val multipartBodyParts = ImageUtil.getMultiPartBody(uriList)
+            Toaster(this).showToast("Uploading ${multipartBodyParts.size} images...")
             disposable = apiService.uploadMultipleImage(prefix, multipartBodyParts)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         response1 ->
-                        showToast(response1.message + ". Creating blog...")
+                        if(response1.error) {
+                            blockUi(false)
+                            Toaster(this).showToast(response1.message)
+                            return@subscribe
+                        }
+                        Toaster(this).showToast(response1.message + ". Creating blog...")
 
                         Timber.d("${response1.urls.size} urls: %s", response1.urls[0])
                         disposable = apiService.createBlog(title, description,

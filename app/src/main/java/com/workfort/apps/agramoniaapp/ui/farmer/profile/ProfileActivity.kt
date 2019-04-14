@@ -34,6 +34,7 @@ import com.workfort.apps.agramoniaapp.ui.farmer.profile.adapter.SectionAdapter
 import com.workfort.apps.agramoniaapp.ui.farmer.profile.callback.ItemClickEvent
 import com.workfort.apps.util.helper.*
 import com.workfort.apps.util.lib.remote.ApiClient
+import id.zelory.compressor.Compressor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -41,6 +42,7 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import org.json.JSONArray
 import timber.log.Timber
+import java.io.File
 
 class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
 
@@ -53,6 +55,9 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
 
     private var disposable: CompositeDisposable = CompositeDisposable()
     private val apiService by lazy { ApiClient.create() }
+
+    private var promptCreateServiceBinding: PromptCreateServiceBinding? = null
+    private var serviceImageInfo: ImageInfo? = null
 
     override val layoutResourceId: Int
         get() = R.layout.activity_profile
@@ -83,7 +88,7 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
         mBinding.fabCreate.setOnClickListener(this)
 
         mBinding.textViewUserName.text = family?.name
-        ImageLoader.load(this, mBinding.imageViewUser, family?.profileImg)
+        mBinding.imageViewUser.load(family?.profileImg)
 
         mAdapter = SectionAdapter()
         mAdapter?.setCallback(object: ItemClickEvent{
@@ -118,6 +123,8 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
             R.id.fab_create -> {
                 showCreateOptionPopup()
             }
+            R.id.tv_choose_img_service,
+            R.id.img_service -> onClickPickServiceImage()
             else -> { }
         }
     }
@@ -146,36 +153,78 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
         popupMenu.show()
     }
 
+    private fun onClickPickServiceImage() {
+        if (PermissionUtil.on().request(this,
+                        PermissionUtil.REQUEST_CODE_STORAGE,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            ImagePicker.pickImage(this, Const.RequestCode.PIC_SERVICE_PHOTO)
+        }
+    }
+
     private fun showCreateServiceDialog() {
         val binding = DataBindingUtil.inflate<PromptCreateServiceBinding>(
                 layoutInflater, R.layout.prompt_create_service, null, false
         )
 
+        promptCreateServiceBinding = binding
         val dialog = AlertDialog.Builder(this)
                 .setTitle(R.string.label_create_service)
                 .setView(binding.root)
                 .create()
 
+        setClickListener(binding.tvChooseImgService, binding.imgService)
         binding.btnSave.setOnClickListener {
             val title = binding.etTitle.text.toString()
             val price = binding.etPrice.text.toString()
 
             if(TextUtils.isEmpty(title) || TextUtils.isEmpty(price)) return@setOnClickListener
+            if(serviceImageInfo == null) {
+                Toaster(this).showToast(R.string.image_required_exception)
+                return@setOnClickListener
+            }
 
             binding.btnSave.isEnabled = false
             binding.pb.visibility = View.VISIBLE
-            disposable.add(apiService.saveService(title, title, title, price.toInt(), family?.id!!)
+            val prefix = RequestBody.create(
+                    MediaType.parse("text/plain"), Const.Prefix.SERVICE
+            )
+
+            val serviceImageMultipart = ImageUtil.getMultiPartBody(
+                    serviceImageInfo?.imageUri!!
+            )
+            disposable.add(apiService.uploadImage(prefix, serviceImageMultipart)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        binding.pb.visibility = View.INVISIBLE
-                        binding.btnSave.isEnabled = true
-                        Toaster(this).showToast(it.message)
-
-                        if(it.success) {
-                            dialog.dismiss()
-                            mAdapter?.addService(it.service!!)
+                    .subscribe({ imageUploadResponse ->
+                        if(imageUploadResponse.error) {
+                            binding.pb.visibility = View.INVISIBLE
+                            binding.btnSave.isEnabled = true
+                            Toaster(this).showToast(imageUploadResponse.message)
+                            return@subscribe
                         }
+                        disposable.add(apiService.saveService(title, title, title,
+                                price.toInt(), imageUploadResponse.url, family?.id!!)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    binding.pb.visibility = View.INVISIBLE
+                                    binding.btnSave.isEnabled = true
+                                    Toaster(this).showToast(it.message)
+
+                                    if(it.success) {
+                                        dialog.dismiss()
+                                        mAdapter?.addService(it.service!!)
+                                    }
+                                }, {
+                                    Timber.e(it)
+                                    binding.pb.visibility = View.INVISIBLE
+                                    binding.btnSave.isEnabled = true
+                                    Toaster(this).showToast(R.string.unknown_exception)
+                                })
+                        )
                     }, {
                         Timber.e(it)
                         binding.pb.visibility = View.INVISIBLE
@@ -340,6 +389,15 @@ class ProfileActivity : BaseActivity<ProfileMvpView, ProfilePresenter>() {
 
                 if(pickedImageInfo != null && pickedImageInfo.imageUri != null) {
                     when (requestCode) {
+                        Const.RequestCode.PIC_SERVICE_PHOTO -> {
+                            serviceImageInfo = pickedImageInfo
+                            promptCreateServiceBinding?.tvChooseImgService
+                                    ?.visibility = View.INVISIBLE
+                            promptCreateServiceBinding?.imgService?.visibility = View.VISIBLE
+                            promptCreateServiceBinding?.imgService?.load(
+                                    pickedImageInfo.imageUri.toString()
+                            )
+                        }
                         Const.RequestCode.PIC_PROPOSAL_PHOTO -> {
                             photoAdapter.addItem(pickedImageInfo.imageUri)
                         }

@@ -30,7 +30,9 @@ interface ApiService {
 
     @Multipart
     @POST("uploader/Api.php?call=upload")
-    fun uploadImage(@Part file: MultipartBody.Part): Observable<ImageUploadResponse>
+    fun uploadImage(@Part("prefix") prefix: RequestBody,
+                    @Part file: MultipartBody.Part):
+            Observable<ImageUploadResponse>
 
     @Multipart
     @POST("uploader/Api.php?call=multiple_upload")
@@ -55,6 +57,7 @@ interface ApiService {
                     @Field("title_de") titleDe: String,
                     @Field("title_rm") titleRm: String,
                     @Field("price") price: Int,
+                    @Field("image") image: String,
                     @Field("family_id") familyId: Int)
             : Observable<SaveServiceResponse>
 

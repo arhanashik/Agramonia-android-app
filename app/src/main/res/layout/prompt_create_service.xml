@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,15 +27,42 @@
                 android:hint="@string/hint_title"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <ImageView
+            android:id="@+id/img_service"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="10dp"
+            tools:src="@drawable/img_tourist"
+            android:contentDescription="@string/description_ic_camera"
+            android:scaleType="center"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_title"/>
+
+        <TextView
+            android:id="@+id/tv_choose_img_service"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_rectangle"
+            android:text="@string/label_add_photos"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_title"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_price"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_title"
+            app:layout_constraintStart_toEndOf="@+id/img_service"
+            app:layout_constraintTop_toTopOf="@+id/img_service"
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -48,10 +76,11 @@
         <Button
             android:id="@+id/btn_save"
             style="@style/ActionButton.Medium"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:text="@string/label_save"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_price"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/img_service"/>
 
         <ProgressBar
             android:id="@+id/pb"

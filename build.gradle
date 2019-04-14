@@ -59,4 +59,5 @@ ext{
     rxandroid = '2.1.0'
     retrofit = '2.4.0'
     timber = '4.7.1'
+    zelory_compressor = '2.1.0'
 }

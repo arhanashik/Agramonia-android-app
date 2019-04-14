@@ -33,6 +33,7 @@
     <string name="hint_full_name">Full Name</string>
     <string name="hint_location">Your Location</string>
     <string name="hint_phone">Your Phone Number</string>
+
     <string name="hint_answer1">
         1.	Does your family have animals? What animals do you have?
     </string>
@@ -49,6 +50,7 @@
     <string name="hint_answer5">
         5.	What do you wish for the future of your children?
     </string>
+
     <string name="hint_title">Please type a title</string>
     <string name="hint_description">Please type a proper description</string>
     <string name="hint_answer">Your answer</string>
@@ -106,38 +108,39 @@
         5.	What do you wish for the future of your children?
     </string>
 
-    <string name="question_1_de" translatable="false">
+    <string name="question_1_ro" translatable="false">
         Familia ta are animale? Ce animale aveți?
     </string>
-    <string name="question_2_de" translatable="false">
+    <string name="question_2_ro" translatable="false">
         Îți plac animalele tale? Care dintre ele este preferată? Dece?
     </string>
-    <string name="question_3_de" translatable="false">
+    <string name="question_3_ro" translatable="false">
         Poți să ne arăți niște poze ale Casei tale? ce faci acasă? Unde ați învățat toate acestea
     </string>
-    <string name="question_4_de" translatable="false">
+    <string name="question_4_ro" translatable="false">
         Sunteți mulțumit de prețurile produselor dvs.?
     </string>
-    <string name="question_5_de" translatable="false">
+    <string name="question_5_ro" translatable="false">
         Ce vreți în viitor pe copiii voștri?
     </string>
 
-    <string name="question_1_ro" translatable="false">
+    <string name="question_1_de" translatable="false">
         Hat deine Familie Tiere? Welche Tiere habt ihr?
     </string>
-    <string name="question_2_ro" translatable="false">
+    <string name="question_2_de" translatable="false">
         Mögt ihr eure Tiere ? Welches ist euer Lieblingstier? Warum?
     </string>
-    <string name="question_3_ro" translatable="false">
+    <string name="question_3_de" translatable="false">
         Kannst du uns ein Bild von deinem Zuhause zeigen? Was stellst du daheim her? Wo hast du
         alldieses gelernt?
     </string>
-    <string name="question_4_ro" translatable="false">
+    <string name="question_4_de" translatable="false">
         Seid ihr mit den Preisen für eure Produkte zufrieden?
     </string>
-    <string name="question_5_ro" translatable="false">
+    <string name="question_5_de" translatable="false">
         Was wünschen Sie für die Zukunft ihrer Kinder?
     </string>
+
     <string name="label_add_answer_photos">Add Photo</string>
     <string name="question_save_message">Save the information?</string>
     <string name="unknown_exception">Ops! Please try again.</string>

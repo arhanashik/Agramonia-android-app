@@ -91,6 +91,8 @@ dependencies {
 
     implementation "com.jakewharton:butterknife:$rootProject.ext.butterknife_version"
     kapt "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknife_version"
+
+    implementation "id.zelory:compressor:$rootProject.ext.zelory_compressor"
 }
 
 //testing libs

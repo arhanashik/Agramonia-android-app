@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        ImageLoader.load(this, mBinding.imgAppLogo, R.drawable.img_logo_only_name)
+        ImageLoader.load(mBinding.imgAppLogo, R.drawable.img_logo_only_name)
     }
 
     fun onClickLogin(view: View){

@@ -15,17 +15,17 @@ import com.bumptech.glide.request.target.Target;
 import androidx.annotation.Nullable;
 
 public class ImageLoader {
-    public static void load(Context context, ImageView imageView, int imageResource){
-        Glide.with(context)
+    public static void load(ImageView imageView, int imageResource){
+        Glide.with(imageView.getContext())
                 .load(imageResource)
                 .into(imageView);
     }
 
-    public static void load(Context context, ImageView imageView, String imgUrl) {
+    public static void load(ImageView imageView, String imgUrl) {
         RequestOptions requestOptions = RequestOptions
                 .placeholderOf(R.drawable.ic_user_avatar)
                 .error(R.drawable.ic_user_avatar);
-        Glide.with(context)
+        Glide.with(imageView.getContext())
                 .load(imgUrl)
                 .apply(requestOptions)
                 .listener(new RequestListener<Drawable>() {

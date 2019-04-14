@@ -31,19 +31,20 @@
     <string name="hint_location">Ihr Ort</string>
     <string name="hint_phone">Ihre Telefonnummer</string>
     <string name="hint_answer1">
-        Familia ta are animale? Ce animale aveți?
+        Hat deine Familie Tiere? Welche Tiere habt ihr?
     </string>
     <string name="hint_answer2">
-        Îți plac animalele tale? Care dintre ele este preferată? Dece?
+        Mögt ihr eure Tiere ? Welches ist euer Lieblingstier? Warum?
     </string>
     <string name="hint_answer3">
-        Poți să ne arăți niște poze ale Casei tale? ce faci acasă? Unde ați învățat toate acestea
+        Kannst du uns ein Bild von deinem Zuhause zeigen? Was stellst du daheim her?
+        Wo hast du alldieses gelernt?
     </string>
     <string name="hint_answer4">
-        Sunteți mulțumit de prețurile produselor dvs.?
+        Seid ihr mit den Preisen für eure Produkte zufrieden?
     </string>
     <string name="hint_answer5">
-        Ce vreți în viitor pe copiii voștri?
+        Was wünschen Sie für die Zukunft ihrer Kinder?
     </string>
     <string name="hint_title">Bitte geben Sie eine Überschrift an</string>
     <string name="hint_description">Bitte geben Sie eine genaue Beschreibung an</string>

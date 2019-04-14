@@ -63,7 +63,7 @@ class RegistrationActivity: AppCompatActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_registration)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        ImageLoader.load(this, mBinding.imgAppLogo, R.drawable.img_logo_only_name)
+        ImageLoader.load(mBinding.imgAppLogo, R.drawable.img_logo_only_name)
 
         questions.addAll(Question.prepareQuestions(this))
         totalQuestion = questions.size
@@ -101,9 +101,8 @@ class RegistrationActivity: AppCompatActivity() {
 
         if (requestCode == PermissionUtil.REQUEST_CODE_STORAGE) {
             for (i in permissions.indices) {
-                val permission = permissions[i]
 
-                when (permission) {
+                when (permissions[i]) {
                     Manifest.permission.CAMERA -> {
                     }
 

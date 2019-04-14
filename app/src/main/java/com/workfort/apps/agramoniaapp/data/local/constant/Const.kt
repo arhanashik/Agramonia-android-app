@@ -13,7 +13,7 @@ object Const {
     const val DIRECTORY_ROOT = "/Agramonia/"
 
     // Prefix
-    object Prefix{
+    object Prefix {
         const val IMAGE = "IMG_"
         const val FAMILY = "FAMILY_"
         const val QA = "QA_"
@@ -34,7 +34,8 @@ object Const {
         const val PIC_USER_PHOTO = 671
         const val PIC_FAMILY_PHOTO = 672
         const val PIC_ANSWER_PHOTO = 673
-        const val PIC_PROPOSAL_PHOTO = 674
+        const val PIC_SERVICE_PHOTO = 674
+        const val PIC_PROPOSAL_PHOTO = 675
 
         const val CREATE_BLOG = 771
     }
